@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{440249B6-9718-4DFB-BB21-CEDA1D395852}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Consignor</RootNamespace>
+    <AssemblyName>Consignor</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile158</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="IShipmentServer.cs" />
+    <Compile Include="Internal\ShipmentServer.cs" />
+    <Compile Include="ShipmentServer\Address.cs" />
+    <Compile Include="ShipmentServer\AddressKind.cs" />
+    <Compile Include="ShipmentServer\Amount.cs" />
+    <Compile Include="ShipmentServer\Batch.cs" />
+    <Compile Include="ShipmentServer\BatchCollection.cs" />
+    <Compile Include="ShipmentServer\BatchReport.cs" />
+    <Compile Include="ShipmentServer\CarriagePayer.cs" />
+    <Compile Include="ShipmentServer\ConsignorEventKind.cs" />
+    <Compile Include="ShipmentServer\LabelCollection.cs" />
+    <Compile Include="ShipmentServer\LabelKind.cs" />
+    <Compile Include="ShipmentServer\UpdatePrice.cs" />
+    <Compile Include="Internal\ConsignorMessages.cs" />
+    <Compile Include="Internal\ConsignorResponse.cs" />
+    <Compile Include="ShipmentServer\Contact.cs" />
+    <Compile Include="ShipmentServer\Document.cs" />
+    <Compile Include="ShipmentServer\DocumentCollection.cs" />
+    <Compile Include="ShipmentServer\ContactCollection.cs" />
+    <Compile Include="ShipmentServer\ContactList.cs" />
+    <Compile Include="ShipmentServer\ContactListCollection.cs" />
+    <Compile Include="ShipmentServer\ContactListKind.cs" />
+    <Compile Include="ShipmentServer\CSEvent.cs" />
+    <Compile Include="ShipmentServer\DangerousGoods.cs" />
+    <Compile Include="ShipmentServer\Detail.cs" />
+    <Compile Include="ShipmentServer\DGClass.cs" />
+    <Compile Include="ShipmentServer\DGKind.cs" />
+    <Compile Include="ShipmentServer\DGMarinePollutant.cs" />
+    <Compile Include="ShipmentServer\DGPackingGroup.cs" />
+    <Compile Include="ShipmentServer\FieldDataType.cs" />
+    <Compile Include="ShipmentServer\InsurancePrice.cs" />
+    <Compile Include="ShipmentServer\Label.cs" />
+    <Compile Include="ShipmentServer\Line.cs" />
+    <Compile Include="ShipmentServer\LineUnit.cs" />
+    <Compile Include="ShipmentServer\Message.cs" />
+    <Compile Include="ShipmentServer\Package.cs" />
+    <Compile Include="ShipmentServer\Product.cs" />
+    <Compile Include="ShipmentServer\Carrier.cs" />
+    <Compile Include="ShipmentServer\CarrierCollection.cs" />
+    <Compile Include="ShipmentServer\Reference.cs" />
+    <Compile Include="ShipmentServer\ReferenceKind.cs" />
+    <Compile Include="ShipmentServer\ShipmentAmountKind.cs" />
+    <Compile Include="ShipmentServer\ShipmentConnectionKind.cs" />
+    <Compile Include="ShipmentServer\ShipmentKind.cs" />
+    <Compile Include="ShipmentServer\ShipmentCollection.cs" />
+    <Compile Include="ShipmentServer\ShipmentMessageKind.cs" />
+    <Compile Include="ShipmentServer\ShipmentTemperature.cs" />
+    <Compile Include="ShipmentServer\ShpConnection.cs" />
+    <Compile Include="ShipmentServer\Subcarrier.cs" />
+    <Compile Include="ShipmentServer\Stack.cs" />
+    <Compile Include="ShipmentServer\Service.cs" />
+    <Compile Include="ShipmentServer\Shipment.cs" />
+    <Compile Include="Internal\Extensions.cs" />
+    <Compile Include="IShipmentServerMessages.cs" />
+    <Compile Include="IShipmentServerResponse.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ConsignorService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\portable-net40+sl4+win8+wp71\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\portable-net40+sl4+win8+wp71\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\portable-net40+sl5+wp80+win8+monotouch+monoandroid\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.3\lib\portable-net40+sl5+win8+wp8\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.18\lib\portable-net40+sl4+win8+wp71\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.18\lib\portable-net40+sl4+win8+wp71\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.18\lib\portable-net40+sl4+win8+wp71\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.3\lib\portable-net40+sl5+win8+wp8\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.3\lib\portable-net40+sl5+win8+wp8\System.Threading.Tasks.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using Consignor.ShipmentServer;
 
 namespace Consignor.Internal
 {
-    internal class ConsignorMessages : Consignor.IShipmentServerMessages
+    internal class ShipmentServerMessages : IShipmentServerMessages
     {
         public List<string> ErrorMessages { get; set; }
         public List<string> WarningMessages { get; set; }

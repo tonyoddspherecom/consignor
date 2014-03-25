@@ -37,7 +37,7 @@ namespace Consignor.Internal
             var content = new FormUrlEncodedContent(values);
             var serverresponse = await client.PostAsync(Url, content);
             var response = await serverresponse.Content.ReadAsStringAsync();
-            var result = new ConsignorResponse
+            var result = new ShipmentServerResponse
             {
                 Request = new
                 {
@@ -49,7 +49,7 @@ namespace Consignor.Internal
                     context = context.ToObject()
                 , }.ToJson(),
                 Response = response.ToObject().ToJson(),
-                Info = response.ToObject<ConsignorMessages>(),
+                Info = response.ToObject<ShipmentServerMessages>(),
             };
             return result;
         }
@@ -71,7 +71,7 @@ namespace Consignor.Internal
             var bytes = serverresponse.IsSuccessStatusCode ? await serverresponse.Content.ReadAsByteArrayAsync() : null;
             var info = serverresponse.IsSuccessStatusCode ? string.Empty : await serverresponse.Content.ReadAsStringAsync();
 
-            var result = new ConsignorResponse<byte[]>
+            var result = new ShipmentServerResponse<byte[]>
             {
                 Request = new
                 {
@@ -83,7 +83,7 @@ namespace Consignor.Internal
                     context = context.ToObject()
                 , }.ToJson(),
                 Response = serverresponse.Content.Headers.ToJson(),
-                Info = info.ToObject<ConsignorMessages>(),
+                Info = info.ToObject<ShipmentServerMessages>(),
                 Result = bytes,
             };
 
@@ -93,7 +93,7 @@ namespace Consignor.Internal
         private async Task<IShipmentServerResponse<T>> Request<T>(string command, string data = "", string options = "", string context = "")
         {
             var response = await Request(command, data, options, context);
-            var result = new ConsignorResponse<T>(response as ConsignorResponse);
+            var result = new ShipmentServerResponse<T>(response as ShipmentServerResponse);
             if (!string.IsNullOrWhiteSpace(result.Response) && result.Info.ErrorMessages == null && result.Info.Messages == null)
             {
                 try
@@ -110,7 +110,7 @@ namespace Consignor.Internal
         private async Task<IShipmentServerResponse<TResult>> RequestAnonymous<T, TResult>(T template, Func<T, TResult> selector, string command, string data = "", string options = "", string context = "")
         {
             var response = await Request(command, data, options, context);
-            var result = new ConsignorResponse<TResult>(response as ConsignorResponse);
+            var result = new ShipmentServerResponse<TResult>(response as ShipmentServerResponse);
             if (!string.IsNullOrWhiteSpace(result.Response) && result.Info.ErrorMessages == null && result.Info.Messages == null)
             {
                 try

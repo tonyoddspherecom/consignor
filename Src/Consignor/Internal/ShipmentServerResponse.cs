@@ -1,11 +1,12 @@
-﻿
+﻿using Consignor.ShipmentServer;
+
 namespace Consignor.Internal
 {
-    internal class ConsignorResponse<T> : ConsignorResponse, IShipmentServerResponse<T>
+    internal class ShipmentServerResponse<T> : ShipmentServerResponse, IShipmentServerResponse<T>
     {
-        public ConsignorResponse() { }
+        public ShipmentServerResponse() { }
 
-        public ConsignorResponse(ConsignorResponse instance)
+        public ShipmentServerResponse(ShipmentServerResponse instance)
         {
             this.Info = instance.Info;
             this.Request = instance.Request;
@@ -14,7 +15,7 @@ namespace Consignor.Internal
         public T Result { get; set; }
     }
 
-    internal class ConsignorResponse : IShipmentServerResponse
+    internal class ShipmentServerResponse : IShipmentServerResponse
     {
         public IShipmentServerMessages Info { get; set; }
 

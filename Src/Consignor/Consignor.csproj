@@ -43,7 +43,6 @@
     <Compile Include="ShipAdvisor\DayOfWeek.cs" />
     <Compile Include="ShipAdvisor\DropPointData.cs" />
     <Compile Include="ShipAdvisor\GetShipmentByOrderOutput.cs" />
-    <Compile Include="ShipAdvisor\Rating.cs" />
     <Compile Include="ShipAdvisor\KeyValue.cs" />
     <Compile Include="ShipAdvisor\OpeningHours.cs" />
     <Compile Include="ShipAdvisor\OrderInitializeOutput.cs" />

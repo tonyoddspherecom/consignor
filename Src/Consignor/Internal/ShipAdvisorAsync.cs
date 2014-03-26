@@ -5,9 +5,9 @@ using Consignor.ShipAdvisor;
 
 namespace Consignor.Internal
 {
-    internal class ShipAdvisorClient : ClientBase<IShipAdvisorAsync>, IShipAdvisorAsync
+    internal class ShipAdvisorAsync : ClientBase<IShipAdvisorAsync>, IShipAdvisorAsync
     {
-        public ShipAdvisorClient(Binding binding, EndpointAddress address) : base(binding, address) {}
+        public ShipAdvisorAsync(Binding binding, EndpointAddress address) : base(binding, address) {}
 
         protected override IShipAdvisorAsync CreateChannel()
         {

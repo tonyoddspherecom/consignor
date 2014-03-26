@@ -8,14 +8,14 @@ namespace Consignor.Internal
 {
     internal class ShipAdvisor : IShipAdvisor
     {
-        private readonly ShipAdvisorClient client;
+        private readonly ShipAdvisorAsync client;
         private readonly MessageHeader authheader;
 
         public ShipAdvisor(string url, string username, string password)
         {
             var binding = new BasicHttpBinding();
             var endpoint = new EndpointAddress(new Uri(url, UriKind.Absolute));
-            client = new ShipAdvisorClient(binding, endpoint);
+            client = new ShipAdvisorAsync(binding, endpoint);
             authheader = MessageHeader.CreateHeader("ServiceAuthenticationHeader", "SoapAuthenticator", new ServiceAuthenticationHeader { Username = username, Password = password });
         }
 

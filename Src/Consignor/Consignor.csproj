@@ -34,10 +34,39 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Internal\IShipAdvisorAsync.cs" />
+    <Compile Include="Internal\ShipmentExporter.cs" />
+    <Compile Include="Internal\ShipmentExporterAsync.cs" />
+    <Compile Include="ShipmentExporter\IShipmentExporter.cs" />
+    <Compile Include="Internal\IShipmentExporterAsync.cs" />
     <Compile Include="Internal\ServiceAuthenticationHeader.cs" />
     <Compile Include="Internal\ShipAdvisor.cs" />
-    <Compile Include="Internal\ShipAdvisorClient.cs" />
+    <Compile Include="Internal\ShipAdvisorAsync.cs" />
     <None Include="Internal\ShipAdvisorWSDL.cs" />
+    <None Include="Internal\ShipmentExportWSDL.cs" />
+    <Compile Include="ShipmentExporter\AmountDto.cs" />
+    <Compile Include="ShipmentExporter\BuyerDto.cs" />
+    <Compile Include="ShipmentExporter\CarrierMeasurement.cs" />
+    <Compile Include="ShipmentExporter\ConsignorEventDto.cs" />
+    <Compile Include="ShipmentExporter\DepotDto.cs" />
+    <Compile Include="ShipmentExporter\DropPointDto.cs" />
+    <Compile Include="ShipmentExporter\EventCountResponse.cs" />
+    <Compile Include="ShipmentExporter\EventResponse.cs" />
+    <Compile Include="ShipmentExporter\EventResponseByEvent.cs" />
+    <Compile Include="ShipmentExporter\ForwarderDto.cs" />
+    <Compile Include="ShipmentExporter\GenericEntityDto.cs" />
+    <Compile Include="ShipmentExporter\MessageDto.cs" />
+    <Compile Include="ShipmentExporter\PackageDto.cs" />
+    <Compile Include="ShipmentExporter\PayerDto.cs" />
+    <Compile Include="ShipmentExporter\PickupDto.cs" />
+    <Compile Include="ShipmentExporter\ReceiverDto.cs" />
+    <Compile Include="ShipmentExporter\ReferenceDto.cs" />
+    <Compile Include="ShipmentExporter\Response.cs" />
+    <Compile Include="ShipmentExporter\ResponseStatus.cs" />
+    <Compile Include="ShipmentExporter\ReturnToDto.cs" />
+    <Compile Include="ShipmentExporter\SenderDto.cs" />
+    <Compile Include="ShipmentExporter\ShipmentDto.cs" />
+    <Compile Include="ShipmentExporter\TemporaryDto.cs" />
+    <Compile Include="ShipmentExporter\TrackAndTraceDto.cs" />
     <Compile Include="ShipmentServer\IShipmentServer.cs" />
     <Compile Include="Internal\ShipmentServer.cs" />
     <Compile Include="ShipAdvisor\DayOfWeek.cs" />
@@ -120,6 +149,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Internal\ShipAdvisor.wsdl" />
+    <None Include="Internal\ShipmentExporter.wsdl" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

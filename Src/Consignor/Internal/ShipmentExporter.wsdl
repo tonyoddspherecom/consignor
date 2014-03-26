@@ -1,0 +1,847 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://edisoftwebservices.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://edisoftwebservices.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://edisoftwebservices.com/">
+      <s:element name="GetShipmentByShipmentNumber">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="installationValue" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="actors" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="shipmentNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetShipmentByShipmentNumberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetShipmentByShipmentNumberResult" type="tns:Response" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Response">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Shipments" type="tns:ArrayOfShipmentDto" />
+          <s:element minOccurs="0" maxOccurs="1" name="ResponseStatus" type="tns:ResponseStatus" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfShipmentDto">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ShipmentDto" nillable="true" type="tns:ShipmentDto" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ShipmentDto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="ShipmentNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="OrderNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CarrierName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ProductName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="TimeStamp" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="DateSubmitted" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="ShipmentClientId" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="User" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="LastStatus" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Packages" type="tns:ArrayOfPackageDto" />
+              <s:element minOccurs="0" maxOccurs="1" name="ShipmentReferences" type="tns:ArrayOfReferenceDto" />
+              <s:element minOccurs="0" maxOccurs="1" name="Amounts" type="tns:ArrayOfAmountDto" />
+              <s:element minOccurs="0" maxOccurs="1" name="CarrierMeasurements" type="tns:ArrayOfCarrierMeasurement" />
+              <s:element minOccurs="0" maxOccurs="1" name="TrackAndTraceList" type="tns:ArrayOfTrackAndTraceDto" />
+              <s:element minOccurs="0" maxOccurs="1" name="Sender" type="tns:SenderDto" />
+              <s:element minOccurs="0" maxOccurs="1" name="Receiver" type="tns:ReceiverDto" />
+              <s:element minOccurs="0" maxOccurs="1" name="Pickup" type="tns:PickupDto" />
+              <s:element minOccurs="0" maxOccurs="1" name="Payer" type="tns:PayerDto" />
+              <s:element minOccurs="0" maxOccurs="1" name="Buyer" type="tns:BuyerDto" />
+              <s:element minOccurs="0" maxOccurs="1" name="Temporary" type="tns:TemporaryDto" />
+              <s:element minOccurs="0" maxOccurs="1" name="Message" type="tns:MessageDto" />
+              <s:element minOccurs="0" maxOccurs="1" name="Forwarder" type="tns:ForwarderDto" />
+              <s:element minOccurs="0" maxOccurs="1" name="ReturnTo" type="tns:ReturnToDto" />
+              <s:element minOccurs="0" maxOccurs="1" name="DropPoint" type="tns:DropPointDto" />
+              <s:element minOccurs="0" maxOccurs="1" name="Depot" type="tns:DepotDto" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="GenericEntityDto" abstract="true" />
+      <s:complexType name="DepotDto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="DropPointDto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ReturnToDto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ForwarderDto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="MessageDto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="TemporaryDto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BuyerDto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="PayerDto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="PickupDto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="SenderDto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="PackageDto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="CarrierMeasurements" type="tns:ArrayOfCarrierMeasurement" />
+              <s:element minOccurs="0" maxOccurs="1" name="TrackAndTraceList" type="tns:ArrayOfTrackAndTraceDto" />
+              <s:element minOccurs="0" maxOccurs="1" name="PackageNumber" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfCarrierMeasurement">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CarrierMeasurement" nillable="true" type="tns:CarrierMeasurement" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CarrierMeasurement">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Volume" type="s:double" />
+              <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="PriceCurrency" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="WeightG" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Awb" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="OrderNumber" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsShipment" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfTrackAndTraceDto">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TrackAndTraceDto" nillable="true" type="tns:TrackAndTraceDto" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TrackAndTraceDto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="EventCode" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="EventDateTime" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="Location" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Awb" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="OrderNumber" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsShipment" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ReferenceDto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ConsignorEventDto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="EventCode" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="EventDateTime" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="Awb" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="OrderNumber" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsShipment" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="AmountDto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:double" />
+              <s:element minOccurs="0" maxOccurs="1" name="Currency" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ReceiverDto">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:GenericEntityDto">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ReceiverCustomerNumber" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfPackageDto">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="PackageDto" nillable="true" type="tns:PackageDto" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfReferenceDto">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ReferenceDto" nillable="true" type="tns:ReferenceDto" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfAmountDto">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="AmountDto" nillable="true" type="tns:AmountDto" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ResponseStatus">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="StatusCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetShipmentByOrderNumber">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="installationValue" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="actors" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetShipmentByOrderNumberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetShipmentByOrderNumberResult" type="tns:Response" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetShipmentsByOrderNumber">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="installationValue" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="actors" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetShipmentsByOrderNumberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetShipmentsByOrderNumberResult" type="tns:Response" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetShipmentByPackageNumber">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="installationValue" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="actors" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="packageNumber" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetShipmentByPackageNumberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetShipmentByPackageNumberResult" type="tns:Response" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetShipmentByDateRange">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="installationValue" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="actors" type="tns:ArrayOfInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="startDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="endDate" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="pageIndex" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetShipmentByDateRangeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetShipmentByDateRangeResult" type="tns:Response" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEvents">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="eventDateTimeStart" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="eventDateTimeEnd" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEventsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEventsResult" type="tns:EventResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="EventResponse">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Events" type="tns:ArrayOfChoice1" />
+          <s:element minOccurs="0" maxOccurs="1" name="ResponseStatus" type="tns:ResponseStatus" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfChoice1">
+        <s:choice minOccurs="0" maxOccurs="unbounded">
+          <s:element minOccurs="1" maxOccurs="1" name="ConsignorEventDto" nillable="true" type="tns:ConsignorEventDto" />
+          <s:element minOccurs="1" maxOccurs="1" name="CarrierMeasurement" nillable="true" type="tns:CarrierMeasurement" />
+          <s:element minOccurs="1" maxOccurs="1" name="TrackAndTraceDto" nillable="true" type="tns:TrackAndTraceDto" />
+        </s:choice>
+      </s:complexType>
+      <s:element name="GetEventsByEventCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="eventDateTimeStart" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="eventDateTimeEnd" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="eventCode" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="actorId" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetEventsByEventCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEventsByEventCodeResult" type="tns:EventResponseByEvent" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="EventResponseByEvent">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Events" type="tns:ArrayOfChoice2" />
+          <s:element minOccurs="0" maxOccurs="1" name="ResponseStatus" type="tns:ResponseStatus" />
+          <s:element minOccurs="1" maxOccurs="1" name="StartDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="EndDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="EventCodes" type="tns:ArrayOfString" />
+          <s:element minOccurs="0" maxOccurs="1" name="ActorIds" type="tns:ArrayOfInt" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfChoice2">
+        <s:choice minOccurs="0" maxOccurs="unbounded">
+          <s:element minOccurs="1" maxOccurs="1" name="ConsignorEventDto" nillable="true" type="tns:ConsignorEventDto" />
+          <s:element minOccurs="1" maxOccurs="1" name="CarrierMeasurement" nillable="true" type="tns:CarrierMeasurement" />
+          <s:element minOccurs="1" maxOccurs="1" name="TrackAndTraceDto" nillable="true" type="tns:TrackAndTraceDto" />
+        </s:choice>
+      </s:complexType>
+      <s:element name="VerifyCount">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="eventDateTimeStart" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="eventDateTimeEnd" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="eventCode" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="actorId" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VerifyCountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VerifyCountResult" type="tns:EventCountResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="EventCountResponse">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="ResponseStatus" type="tns:ResponseStatus" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetShipmentStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="number" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetShipmentStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetShipmentStatusResult" type="tns:EventResponse" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetShipmentByShipmentNumberSoapIn">
+    <wsdl:part name="parameters" element="tns:GetShipmentByShipmentNumber" />
+  </wsdl:message>
+  <wsdl:message name="GetShipmentByShipmentNumberSoapOut">
+    <wsdl:part name="parameters" element="tns:GetShipmentByShipmentNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetShipmentByOrderNumberSoapIn">
+    <wsdl:part name="parameters" element="tns:GetShipmentByOrderNumber" />
+  </wsdl:message>
+  <wsdl:message name="GetShipmentByOrderNumberSoapOut">
+    <wsdl:part name="parameters" element="tns:GetShipmentByOrderNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetShipmentsByOrderNumberSoapIn">
+    <wsdl:part name="parameters" element="tns:GetShipmentsByOrderNumber" />
+  </wsdl:message>
+  <wsdl:message name="GetShipmentsByOrderNumberSoapOut">
+    <wsdl:part name="parameters" element="tns:GetShipmentsByOrderNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetShipmentByPackageNumberSoapIn">
+    <wsdl:part name="parameters" element="tns:GetShipmentByPackageNumber" />
+  </wsdl:message>
+  <wsdl:message name="GetShipmentByPackageNumberSoapOut">
+    <wsdl:part name="parameters" element="tns:GetShipmentByPackageNumberResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetShipmentByDateRangeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetShipmentByDateRange" />
+  </wsdl:message>
+  <wsdl:message name="GetShipmentByDateRangeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetShipmentByDateRangeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEventsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetEvents" />
+  </wsdl:message>
+  <wsdl:message name="GetEventsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetEventsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEventsByEventCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetEventsByEventCode" />
+  </wsdl:message>
+  <wsdl:message name="GetEventsByEventCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetEventsByEventCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="VerifyCountSoapIn">
+    <wsdl:part name="parameters" element="tns:VerifyCount" />
+  </wsdl:message>
+  <wsdl:message name="VerifyCountSoapOut">
+    <wsdl:part name="parameters" element="tns:VerifyCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetShipmentStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:GetShipmentStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetShipmentStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:GetShipmentStatusResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ShipmentExporterEntryPointSoap">
+    <wsdl:operation name="GetShipmentByShipmentNumber">
+      <wsdl:input message="tns:GetShipmentByShipmentNumberSoapIn" />
+      <wsdl:output message="tns:GetShipmentByShipmentNumberSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetShipmentByOrderNumber">
+      <wsdl:input message="tns:GetShipmentByOrderNumberSoapIn" />
+      <wsdl:output message="tns:GetShipmentByOrderNumberSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetShipmentsByOrderNumber">
+      <wsdl:input message="tns:GetShipmentsByOrderNumberSoapIn" />
+      <wsdl:output message="tns:GetShipmentsByOrderNumberSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetShipmentByPackageNumber">
+      <wsdl:input message="tns:GetShipmentByPackageNumberSoapIn" />
+      <wsdl:output message="tns:GetShipmentByPackageNumberSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetShipmentByDateRange">
+      <wsdl:input message="tns:GetShipmentByDateRangeSoapIn" />
+      <wsdl:output message="tns:GetShipmentByDateRangeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEvents">
+      <wsdl:input message="tns:GetEventsSoapIn" />
+      <wsdl:output message="tns:GetEventsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEventsByEventCode">
+      <wsdl:input message="tns:GetEventsByEventCodeSoapIn" />
+      <wsdl:output message="tns:GetEventsByEventCodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifyCount">
+      <wsdl:input message="tns:VerifyCountSoapIn" />
+      <wsdl:output message="tns:VerifyCountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetShipmentStatus">
+      <wsdl:input message="tns:GetShipmentStatusSoapIn" />
+      <wsdl:output message="tns:GetShipmentStatusSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ShipmentExporterEntryPointSoap" type="tns:ShipmentExporterEntryPointSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetShipmentByShipmentNumber">
+      <soap:operation soapAction="http://edisoftwebservices.com/GetShipmentByShipmentNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetShipmentByOrderNumber">
+      <soap:operation soapAction="http://edisoftwebservices.com/GetShipmentByOrderNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetShipmentsByOrderNumber">
+      <soap:operation soapAction="http://edisoftwebservices.com/GetShipmentsByOrderNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetShipmentByPackageNumber">
+      <soap:operation soapAction="http://edisoftwebservices.com/GetShipmentByPackageNumber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetShipmentByDateRange">
+      <soap:operation soapAction="http://edisoftwebservices.com/GetShipmentByDateRange" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEvents">
+      <soap:operation soapAction="http://edisoftwebservices.com/GetEvents" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEventsByEventCode">
+      <soap:operation soapAction="http://edisoftwebservices.com/GetEventsByEventCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyCount">
+      <soap:operation soapAction="http://edisoftwebservices.com/VerifyCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetShipmentStatus">
+      <soap:operation soapAction="http://edisoftwebservices.com/GetShipmentStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ShipmentExporterEntryPointSoap12" type="tns:ShipmentExporterEntryPointSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetShipmentByShipmentNumber">
+      <soap12:operation soapAction="http://edisoftwebservices.com/GetShipmentByShipmentNumber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetShipmentByOrderNumber">
+      <soap12:operation soapAction="http://edisoftwebservices.com/GetShipmentByOrderNumber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetShipmentsByOrderNumber">
+      <soap12:operation soapAction="http://edisoftwebservices.com/GetShipmentsByOrderNumber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetShipmentByPackageNumber">
+      <soap12:operation soapAction="http://edisoftwebservices.com/GetShipmentByPackageNumber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetShipmentByDateRange">
+      <soap12:operation soapAction="http://edisoftwebservices.com/GetShipmentByDateRange" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEvents">
+      <soap12:operation soapAction="http://edisoftwebservices.com/GetEvents" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEventsByEventCode">
+      <soap12:operation soapAction="http://edisoftwebservices.com/GetEventsByEventCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyCount">
+      <soap12:operation soapAction="http://edisoftwebservices.com/VerifyCount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetShipmentStatus">
+      <soap12:operation soapAction="http://edisoftwebservices.com/GetShipmentStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ShipmentExporterEntryPoint">
+    <wsdl:port name="ShipmentExporterEntryPointSoap" binding="tns:ShipmentExporterEntryPointSoap">
+      <soap:address location="http://se.consignorportal.com:6060/ShipmentExporter.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ShipmentExporterEntryPointSoap12" binding="tns:ShipmentExporterEntryPointSoap12">
+      <soap12:address location="http://se.consignorportal.com:6060/ShipmentExporter.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

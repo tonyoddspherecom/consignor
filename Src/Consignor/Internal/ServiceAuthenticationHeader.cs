@@ -7,5 +7,6 @@ namespace Consignor.Internal
     {
         [DataMember(Order = 0)] public string Username { get; set; }
         [DataMember(Order = 1)] public string Password { get; set; }
+        [DataMember(Order = 2)] public bool? IsEncrypted { get; set; }
     }
 }

@@ -158,3 +158,6 @@ $RECYCLE.BIN/
 
 # Telerik JustCode
 /Src/.JustCode
+
+# NuGet package build directory
+/Src/NuGet

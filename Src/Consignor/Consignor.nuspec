@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>1.1</version>
+    <title>Consignor</title>
+    <authors>edberg</authors>
+    <owners>edberg</owners>
+    <projectUrl>https://github.com/edberg/consignor</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This is a .NET portable class library for the Shipment Server, Shipment Exporter and ShipAdvisor from Edi-Soft, see http://blog.edi-soft.no.</description>
+    <copyright>Copyright 2014</copyright>
+    <tags>Consignor ShipmentServer ShipmentExporter ShipAdvisor</tags>
+  </metadata>
+</package>

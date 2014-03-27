@@ -32,6 +32,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NuGet|AnyCPU'">
+    <OutputPath>bin\NuGet\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Internal\IShipAdvisorAsync.cs" />
     <Compile Include="Internal\ShipmentExporter.cs" />
@@ -41,6 +50,7 @@
     <Compile Include="Internal\ServiceAuthenticationHeader.cs" />
     <Compile Include="Internal\ShipAdvisor.cs" />
     <Compile Include="Internal\ShipAdvisorAsync.cs" />
+    <None Include="Consignor.nuspec" />
     <None Include="Internal\ShipAdvisorWSDL.cs" />
     <None Include="Internal\ShipmentExportWSDL.cs" />
     <Compile Include="ShipmentExporter\AmountDto.cs" />
@@ -156,10 +166,10 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Threading.Tasks">
-      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.166-beta\lib\portable-net40+sl4+win8+wp71\Microsoft.Threading.Tasks.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\portable-net40+sl4+win8+wp71\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions">
-      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.166-beta\lib\portable-net40+sl4+win8+wp71\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\portable-net40+sl4+win8+wp71\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\portable-net40+sl5+wp80+win8+monotouch+monoandroid\Newtonsoft.Json.dll</HintPath>
@@ -189,11 +199,14 @@
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
     <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
+  <ItemGroup>
+    <nupkg Include="$(SolutionDir)NuGet\*.nupkg"/>
+  </ItemGroup>
+  <Target Name="AfterBuild" Condition="'$(Configuration)|$(Platform)' == 'NuGet|AnyCPU'">
+    <RemoveDir Directories="$(SolutionDir)NuGet" />
+    <MakeDir Directories="$(SolutionDir)NuGet" />
+    <Exec WorkingDirectory="$(ProjectDir)" Command="$(SolutionDir)Tools\NuGet.exe pack -OutputDir &quot;$(SolutionDir)NuGet&quot; -Properties Configuration=$(Configuration)" />
+    
+    <Exec WorkingDirectory="$(SolutionDir)NuGet" Command="$(SolutionDir)Tools\NuGet.exe push @(nupkg)"/>
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

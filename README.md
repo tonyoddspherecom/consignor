@@ -10,7 +10,7 @@ Getting started
 
 After you have installed the NuGet package, you can get and instance of the 3 services using the ConsignorService class:
 
-```
+```C#
 using Consignor;
 
 var ss = ConsignorService.CreateShipmentServer("<server url>", "<your actorid>", "<your key>");

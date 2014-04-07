@@ -5,6 +5,18 @@ This is a .NET portable class library for the Shipment Server, Shipment Exporter
 
 There is a NuGet package available here: https://www.nuget.org/packages/Consignor
 
+Getting started
+===============
+
+After you have installed the NuGet package, you can get and instance of the 3 services using the ConsignorService class:
+
+```
+using Consignor;
+
+var ss = ConsignorService.CreateShipmentServer("<server url>", "<your actorid>", "<your key>");
+var sa = ConsignorService.CreateShipAdvisor("<server url>", "<your username>", "<your password>");
+var se = ConsignorService.CreateShipmentExporter("<server url>", "<your username>", "<your password>");
+```
 
 
 

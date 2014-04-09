@@ -8,7 +8,7 @@ There is a NuGet package available here: https://www.nuget.org/packages/Consigno
 Getting started
 ===============
 
-After you have installed the NuGet package, you can get and instance of the 3 services using the ConsignorService class:
+After you have installed the NuGet package, you can get an instance of the 3 services using the static ConsignorService class:
 
 ```C#
 using Consignor;

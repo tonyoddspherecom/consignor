@@ -77,6 +77,9 @@
     <Compile Include="ShipmentExporter\ShipmentDto.cs" />
     <Compile Include="ShipmentExporter\TemporaryDto.cs" />
     <Compile Include="ShipmentExporter\TrackAndTraceDto.cs" />
+    <Compile Include="ShipmentServer\DetailItem.cs" />
+    <Compile Include="ShipmentServer\DetailGroup.cs" />
+    <Compile Include="ShipmentServer\GoodType.cs" />
     <Compile Include="ShipmentServer\IShipmentServer.cs" />
     <Compile Include="Internal\ShipmentServer.cs" />
     <Compile Include="ShipAdvisor\DayOfWeek.cs" />
@@ -199,14 +202,10 @@
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
     <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
-  <ItemGroup>
-    <nupkg Include="$(SolutionDir)NuGet\*.nupkg"/>
-  </ItemGroup>
   <Target Name="AfterBuild" Condition="'$(Configuration)|$(Platform)' == 'NuGet|AnyCPU'">
     <RemoveDir Directories="$(SolutionDir)NuGet" />
     <MakeDir Directories="$(SolutionDir)NuGet" />
     <Exec WorkingDirectory="$(ProjectDir)" Command="$(SolutionDir)Tools\NuGet.exe pack -OutputDir &quot;$(SolutionDir)NuGet&quot; -Properties Configuration=$(Configuration)" />
-    
-    <Exec WorkingDirectory="$(SolutionDir)NuGet" Command="$(SolutionDir)Tools\NuGet.exe push @(nupkg)"/>
+    <Exec WorkingDirectory="$(SolutionDir)NuGet" Command="$(SolutionDir)Tools\NuGet.exe push @(nupkg)" />
   </Target>
 </Project>

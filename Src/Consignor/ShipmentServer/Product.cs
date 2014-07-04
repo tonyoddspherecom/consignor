@@ -7,6 +7,10 @@ namespace Consignor.ShipmentServer
         public int ProdConceptID { get; set; }
         public int ProdCSID { get; set; }
         public string ProdName { get; set; }
+        public bool AllowDG { get; set; }
+        public List<GoodType> GoodTypes { get; set; }
+        public List<DetailGroup> DetailGroups { get; set; }
         public List<Service> Services { get; set; }
     }
+
 }

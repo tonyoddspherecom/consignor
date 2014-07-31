@@ -48,7 +48,7 @@ namespace Consignor.ShipmentServer
         public int LabelsCount { get; set; }
         public int FreightBillsCount { get; set; }
         public List<int> Services { get; set; }
-        public List<Detail> Details { get; set; }
+        public List<DetailGroup> DetailGroups { get; set; }
         public List<Address> Addresses { get; set; }
         public List<Amount> Amounts { get; set; }
         public List<Line> Lines { get; set; }

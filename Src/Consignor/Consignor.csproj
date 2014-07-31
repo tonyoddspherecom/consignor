@@ -77,8 +77,10 @@
     <Compile Include="ShipmentExporter\ShipmentDto.cs" />
     <Compile Include="ShipmentExporter\TemporaryDto.cs" />
     <Compile Include="ShipmentExporter\TrackAndTraceDto.cs" />
-    <Compile Include="ShipmentServer\DetailItem.cs" />
     <Compile Include="ShipmentServer\DetailGroup.cs" />
+    <Compile Include="ShipmentServer\DetailItem.cs" />
+    <Compile Include="ShipmentServer\DetailItemGroup.cs" />
+    <Compile Include="ShipmentServer\DetailRow.cs" />
     <Compile Include="ShipmentServer\GoodType.cs" />
     <Compile Include="ShipmentServer\IShipmentServer.cs" />
     <Compile Include="Internal\ShipmentServer.cs" />
@@ -206,6 +208,6 @@
     <RemoveDir Directories="$(SolutionDir)NuGet" />
     <MakeDir Directories="$(SolutionDir)NuGet" />
     <Exec WorkingDirectory="$(ProjectDir)" Command="$(SolutionDir)Tools\NuGet.exe pack -OutputDir &quot;$(SolutionDir)NuGet&quot; -Properties Configuration=$(Configuration)" />
-    <Exec WorkingDirectory="$(SolutionDir)NuGet" Command="$(SolutionDir)Tools\NuGet.exe push @(nupkg)" />
+    <Exec WorkingDirectory="$(SolutionDir)NuGet" Command="$(SolutionDir)Tools\NuGet.exe push" />
   </Target>
 </Project>

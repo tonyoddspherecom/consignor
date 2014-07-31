@@ -4,9 +4,7 @@ namespace Consignor.ShipmentServer
 {
     public class DetailGroup
     {
-        public long DetailGroupID { get; set; }
-        public string Label { get; set; }
-        public string Listing { get; set; }
-        public List<DetailItem> Details { get; set; }
+        public int GroupID { get; set; }
+        public List<DetailRow> Rows { get; set; }
     }
 }

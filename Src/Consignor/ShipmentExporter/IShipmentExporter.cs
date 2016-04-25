@@ -1,17 +1,24 @@
 using System;
 using System.Threading.Tasks;
+
 namespace Consignor.ShipmentExporter
 { 
     public interface IShipmentExporter
     {
-        Task<Response> GetShipmentByShipmentNumberAsync(string installationValue, int[] actors, string shipmentNumber);
-        Task<Response> GetShipmentByOrderNumberAsync(string installationValue, int[] actors, string referenceNumber);
-        Task<Response> GetShipmentsByOrderNumberAsync(string installationValue, int[] actors, string referenceNumber);
-        Task<Response> GetShipmentByPackageNumberAsync(string installationValue, int[] actors, string packageNumber);
-        Task<Response> GetShipmentByDateRangeAsync(string installationValue, int[] actors, DateTime startDate, DateTime endDate, int pageIndex);
-        Task<EventResponse> GetEventsAsync(DateTime eventDateTimeStart, DateTime eventDateTimeEnd);
-        Task<EventResponseByEvent> GetEventsByEventCodeAsync(DateTime eventDateTimeStart, DateTime eventDateTimeEnd, string[] eventCode, int[] actorId);
-        Task<EventCountResponse> VerifyCountAsync(DateTime eventDateTimeStart, DateTime eventDateTimeEnd, string[] eventCode, int[] actorId);
-        Task<EventResponse> GetShipmentStatusAsync(string number);
+        Task<Event[]> GetEventsAsync(DateTime eventDateTimeStart, DateTime eventDateTimeEnd);
+
+        Task<Shipment[]> GetShipmentsByShipmentNumberAsync(string installationValue, int[] actors, string shipmentNumber, DateTime? startDateTime, DateTime? endDateTime);
+        //Task<Shipment[]> GetShipmentsByOrderNumberAsync(string installationValue, int[] actors, string referenceNumber, DateTime? startDateTime, DateTime? endDateTime);
+        /*
+        
+        Task<Shipment[]> GetShipmentsByPackageNumberAsync(string installationValue, int[] actors, string packageNumber, DateTime? startDateTime, DateTime? endDateTime);
+        Task<Shipment[]> GetShipmentsByDateRangeAsync(string installationValue, int[] actors, DateTime? startDateTime, DateTime? endDateTime);
+        
+        Task<Event[]> GetCarrierEventsByEventCodeAsync(System.DateTime eventDateTimeStart, System.DateTime eventDateTimeEnd, string[] eventCodes, string installationValue, int[] actors);
+        Task<Event[]> GetShipmentStatusAsync(string shipmentNumber, DateTime? startDateTime, DateTime? endDateTime);
+        Task<bool> SendEventAsync(ImportEvent submitEvent);
+        Task<StatusInfo[]> IsShipmentClosedAsync(string barcode);
+        Task<HealthResponse> CheckHealthAsync();
+        */
     }
 }

@@ -15,54 +15,64 @@ namespace Consignor.Internal
         {
             this.username = username;
             this.password = password;
-            var binding = new BasicHttpBinding();
+            var binding = new BasicHttpBinding(BasicHttpSecurityMode.Transport);
             var endpoint = new EndpointAddress(new Uri(url, UriKind.Absolute));
             client = new ShipmentExporterAsync(binding, endpoint);
         }
-
-        public Task<Response> GetShipmentByShipmentNumberAsync(string installationValue, int[] actors, string shipmentNumber)
+        public Task<Event[]> GetEventsAsync(DateTime eventDateTimeStart, DateTime eventDateTimeEnd)
         {
-            return Task.Factory.FromAsync(client.BeginGetShipmentByShipmentNumber(username, password, installationValue, actors, shipmentNumber, null, null), ar => client.EndGetShipmentByShipmentNumber(ar));
+            return Task<Event[]>.Factory.FromAsync(client.BeginGetEvents(username, password, eventDateTimeStart, eventDateTimeEnd, null, null), ar => client.EndGetEvents(ar));
         }
 
-        public Task<Response> GetShipmentByOrderNumberAsync(string installationValue, int[] actors, string referenceNumber)
+        public Task<Shipment[]> GetShipmentsByShipmentNumberAsync(string installationValue, int[] actors, string shipmentNumber, DateTime? startDateTime, DateTime? endDateTime)
         {
-            return Task.Factory.FromAsync(client.BeginGetShipmentByOrderNumber(username, password, installationValue, actors, referenceNumber, null, null), ar => client.EndGetShipmentByOrderNumber(ar));
+            return Task<Shipment[]>.Factory.FromAsync(client.BeginGetShipmentsByShipmentNumber(username,password, installationValue,actors,shipmentNumber,startDateTime,endDateTime, null, null), ar => client.EndGetShipmentsByShipmentNumber(ar));
+        }
+        /*
+        
+
+        public Task<GetShipmentsByOrderNumberResponse> GetShipmentsByOrderNumberAsync(GetShipmentsByOrderNumberRequest request)
+        {
+            return Task<GetShipmentsByOrderNumberResponse>.Factory.FromAsync(client.BeginGetShipmentsByOrderNumber(request, null, null), ar => client.EndGetShipmentsByOrderNumber(ar));
         }
 
-        public Task<Response> GetShipmentsByOrderNumberAsync(string installationValue, int[] actors, string referenceNumber)
+        public Task<GetShipmentsByPackageNumberResponse> GetShipmentsByPackageNumberAsync(GetShipmentsByPackageNumberRequest request)
         {
-            return Task.Factory.FromAsync(client.BeginGetShipmentsByOrderNumber(username, password, installationValue, actors, referenceNumber, null, null), ar => client.EndGetShipmentsByOrderNumber(ar));
+            return Task<GetShipmentsByPackageNumberResponse>.Factory.FromAsync(client.BeginGetShipmentsByPackageNumber(request, null, null), ar => client.EndGetShipmentsByPackageNumber(ar));
         }
 
-        public Task<Response> GetShipmentByPackageNumberAsync(string installationValue, int[] actors, string packageNumber)
+        public Task<GetShipmentsByDateRangeResponse> GetShipmentsByDateRangeAsync(GetShipmentsByDateRangeRequest request)
         {
-            return Task.Factory.FromAsync(client.BeginGetShipmentByPackageNumber(username, password, installationValue, actors, packageNumber, null, null), ar => client.EndGetShipmentByPackageNumber(ar));
+            return Task<GetShipmentsByDateRangeResponse>.Factory.FromAsync(client.BeginGetShipmentsByDateRange(request, null, null), ar => client.EndGetShipmentsByDateRange(ar));
         }
 
-        public Task<Response> GetShipmentByDateRangeAsync(string installationValue, int[] actors, DateTime startDate, DateTime endDate, int pageIndex)
+        
+
+        public Task<GetCarrierEventsByEventCodeResponse> GetCarrierEventsByEventCodeAsync(GetCarrierEventsByEventCodeRequest request)
         {
-            return Task.Factory.FromAsync(client.BeginGetShipmentByDateRange(username, password, installationValue, actors, startDate, endDate, pageIndex, null, null), ar => client.EndGetShipmentByDateRange(ar));
+            return Task<GetCarrierEventsByEventCodeResponse>.Factory.FromAsync(client.BeginGetCarrierEventsByEventCode(request, null, null), ar => client.EndGetCarrierEventsByEventCode(ar));
         }
 
-        public Task<EventResponse> GetEventsAsync(DateTime eventDateTimeStart, DateTime eventDateTimeEnd)
+
+        public Task<GetShipmentStatusResponse> GetShipmentStatusAsync(GetShipmentStatusRequest request)
         {
-            return Task.Factory.FromAsync(client.BeginGetEvents(username, password, eventDateTimeStart, eventDateTimeEnd, null, null), ar => client.EndGetEvents(ar));
+            return Task<GetShipmentStatusResponse>.Factory.FromAsync(client.BeginGetShipmentStatus(request, null, null), ar => client.EndGetShipmentStatus(ar));
         }
 
-        public Task<EventResponseByEvent> GetEventsByEventCodeAsync(DateTime eventDateTimeStart, DateTime eventDateTimeEnd, string[] eventCode, int[] actorId)
+        public Task<SendEventResponse> SendEventAsync(SendEventRequest request)
         {
-            return Task.Factory.FromAsync(client.BeginGetEventsByEventCode(username, password, eventDateTimeStart, eventDateTimeEnd, eventCode, actorId, null, null), ar => client.EndGetEventsByEventCode(ar));
+            return Task<SendEventResponse>.Factory.FromAsync(client.BeginSendEvent(request, null, null), ar => client.EndSendEvent(ar));
         }
 
-        public Task<EventCountResponse> VerifyCountAsync(DateTime eventDateTimeStart, DateTime eventDateTimeEnd, string[] eventCode, int[] actorId)
+        public Task<IsShipmentClosedResponse> IsShipmentClosedAsync(IsShipmentClosedRequest request)
         {
-            return Task.Factory.FromAsync(client.BeginVerifyCount(username, password, eventDateTimeStart, eventDateTimeEnd, eventCode, actorId, null, null), ar => client.EndVerifyCount(ar));
+            return Task<IsShipmentClosedResponse>.Factory.FromAsync(client.BeginIsShipmentClosed(request, null, null), ar => client.EndIsShipmentClosed(ar));
         }
 
-        public Task<EventResponse> GetShipmentStatusAsync(string number)
+        public Task<CheckHealthResponse> CheckHealthAsync(CheckHealthRequest request)
         {
-            return Task.Factory.FromAsync(client.BeginGetShipmentStatus(username, password, number, null, null), ar => client.EndGetShipmentStatus(ar));
+            return Task<CheckHealthResponse>.Factory.FromAsync(client.BeginCheckHealth(request, null, null), ar => client.EndCheckHealth(ar));
         }
+        */
     }
 }

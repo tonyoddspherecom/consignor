@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consignor", "Consignor\Consignor.csproj", "{440249B6-9718-4DFB-BB21-CEDA1D395852}"
 EndProject
@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		..\README.md = ..\README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsignorTest", "ConsignorTest\ConsignorTest.csproj", "{A7236C34-65D5-404C-9891-7DF0A55EF497}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +26,12 @@ Global
 		{440249B6-9718-4DFB-BB21-CEDA1D395852}.NuGet|Any CPU.Deploy.0 = NuGet|Any CPU
 		{440249B6-9718-4DFB-BB21-CEDA1D395852}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{440249B6-9718-4DFB-BB21-CEDA1D395852}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7236C34-65D5-404C-9891-7DF0A55EF497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7236C34-65D5-404C-9891-7DF0A55EF497}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7236C34-65D5-404C-9891-7DF0A55EF497}.NuGet|Any CPU.ActiveCfg = Release|Any CPU
+		{A7236C34-65D5-404C-9891-7DF0A55EF497}.NuGet|Any CPU.Build.0 = Release|Any CPU
+		{A7236C34-65D5-404C-9891-7DF0A55EF497}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7236C34-65D5-404C-9891-7DF0A55EF497}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

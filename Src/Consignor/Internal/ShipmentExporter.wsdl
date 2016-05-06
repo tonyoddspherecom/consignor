@@ -1,847 +1,2717 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://edisoftwebservices.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://edisoftwebservices.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions name="PortalDataService" targetNamespace="http://edisoftwebservices.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://edisoftwebservices.com/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing">
+  <wsp:Policy wsu:Id="BasicHttpsBinding_IPortalData_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false"/>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256/>
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict/>
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsdl:types>
-    <s:schema elementFormDefault="qualified" targetNamespace="http://edisoftwebservices.com/">
-      <s:element name="GetShipmentByShipmentNumber">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="installationValue" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="actors" type="tns:ArrayOfInt" />
-            <s:element minOccurs="0" maxOccurs="1" name="shipmentNumber" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="ArrayOfInt">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="GetShipmentByShipmentNumberResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetShipmentByShipmentNumberResult" type="tns:Response" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="Response">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="Shipments" type="tns:ArrayOfShipmentDto" />
-          <s:element minOccurs="0" maxOccurs="1" name="ResponseStatus" type="tns:ResponseStatus" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="ArrayOfShipmentDto">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="ShipmentDto" nillable="true" type="tns:ShipmentDto" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="ShipmentDto">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="ShipmentNumber" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="OrderNumber" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="CarrierName" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="ProductName" type="s:string" />
-              <s:element minOccurs="1" maxOccurs="1" name="TimeStamp" type="s:dateTime" />
-              <s:element minOccurs="1" maxOccurs="1" name="DateSubmitted" nillable="true" type="s:dateTime" />
-              <s:element minOccurs="1" maxOccurs="1" name="ShipmentClientId" type="s:int" />
-              <s:element minOccurs="0" maxOccurs="1" name="User" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="LastStatus" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Packages" type="tns:ArrayOfPackageDto" />
-              <s:element minOccurs="0" maxOccurs="1" name="ShipmentReferences" type="tns:ArrayOfReferenceDto" />
-              <s:element minOccurs="0" maxOccurs="1" name="Amounts" type="tns:ArrayOfAmountDto" />
-              <s:element minOccurs="0" maxOccurs="1" name="CarrierMeasurements" type="tns:ArrayOfCarrierMeasurement" />
-              <s:element minOccurs="0" maxOccurs="1" name="TrackAndTraceList" type="tns:ArrayOfTrackAndTraceDto" />
-              <s:element minOccurs="0" maxOccurs="1" name="Sender" type="tns:SenderDto" />
-              <s:element minOccurs="0" maxOccurs="1" name="Receiver" type="tns:ReceiverDto" />
-              <s:element minOccurs="0" maxOccurs="1" name="Pickup" type="tns:PickupDto" />
-              <s:element minOccurs="0" maxOccurs="1" name="Payer" type="tns:PayerDto" />
-              <s:element minOccurs="0" maxOccurs="1" name="Buyer" type="tns:BuyerDto" />
-              <s:element minOccurs="0" maxOccurs="1" name="Temporary" type="tns:TemporaryDto" />
-              <s:element minOccurs="0" maxOccurs="1" name="Message" type="tns:MessageDto" />
-              <s:element minOccurs="0" maxOccurs="1" name="Forwarder" type="tns:ForwarderDto" />
-              <s:element minOccurs="0" maxOccurs="1" name="ReturnTo" type="tns:ReturnToDto" />
-              <s:element minOccurs="0" maxOccurs="1" name="DropPoint" type="tns:DropPointDto" />
-              <s:element minOccurs="0" maxOccurs="1" name="Depot" type="tns:DepotDto" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="GenericEntityDto" abstract="true" />
-      <s:complexType name="DepotDto">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="DropPointDto">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="ReturnToDto">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="ForwarderDto">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="MessageDto">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="TemporaryDto">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="BuyerDto">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="PayerDto">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="PickupDto">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="SenderDto">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="PackageDto">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="CarrierMeasurements" type="tns:ArrayOfCarrierMeasurement" />
-              <s:element minOccurs="0" maxOccurs="1" name="TrackAndTraceList" type="tns:ArrayOfTrackAndTraceDto" />
-              <s:element minOccurs="0" maxOccurs="1" name="PackageNumber" type="s:string" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="ArrayOfCarrierMeasurement">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="CarrierMeasurement" nillable="true" type="tns:CarrierMeasurement" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="CarrierMeasurement">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="1" maxOccurs="1" name="Volume" type="s:double" />
-              <s:element minOccurs="1" maxOccurs="1" name="Price" type="s:double" />
-              <s:element minOccurs="0" maxOccurs="1" name="PriceCurrency" type="s:string" />
-              <s:element minOccurs="1" maxOccurs="1" name="WeightG" type="s:int" />
-              <s:element minOccurs="0" maxOccurs="1" name="Awb" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="OrderNumber" type="s:string" />
-              <s:element minOccurs="1" maxOccurs="1" name="IsShipment" type="s:boolean" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="ArrayOfTrackAndTraceDto">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="TrackAndTraceDto" nillable="true" type="tns:TrackAndTraceDto" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="TrackAndTraceDto">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="EventCode" type="s:string" />
-              <s:element minOccurs="1" maxOccurs="1" name="EventDateTime" type="s:dateTime" />
-              <s:element minOccurs="0" maxOccurs="1" name="Location" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Awb" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="OrderNumber" type="s:string" />
-              <s:element minOccurs="1" maxOccurs="1" name="IsShipment" type="s:boolean" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="ReferenceDto">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Value" type="s:string" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="ConsignorEventDto">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="EventCode" type="s:string" />
-              <s:element minOccurs="1" maxOccurs="1" name="EventDateTime" type="s:dateTime" />
-              <s:element minOccurs="0" maxOccurs="1" name="Awb" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="OrderNumber" type="s:string" />
-              <s:element minOccurs="1" maxOccurs="1" name="IsShipment" type="s:boolean" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="AmountDto">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
-              <s:element minOccurs="1" maxOccurs="1" name="Value" type="s:double" />
-              <s:element minOccurs="0" maxOccurs="1" name="Currency" type="s:string" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="ReceiverDto">
-        <s:complexContent mixed="false">
-          <s:extension base="tns:GenericEntityDto">
-            <s:sequence>
-              <s:element minOccurs="0" maxOccurs="1" name="Name1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Name2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="PostalCode" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress1" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="StreetAddress2" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="City" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="ReceiverCustomerNumber" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="CountryIso" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Attention" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Mobile" type="s:string" />
-              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
-            </s:sequence>
-          </s:extension>
-        </s:complexContent>
-      </s:complexType>
-      <s:complexType name="ArrayOfPackageDto">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="PackageDto" nillable="true" type="tns:PackageDto" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="ArrayOfReferenceDto">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="ReferenceDto" nillable="true" type="tns:ReferenceDto" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="ArrayOfAmountDto">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="AmountDto" nillable="true" type="tns:AmountDto" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="ResponseStatus">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="StatusCode" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="StatusDescription" type="s:string" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="GetShipmentByOrderNumber">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="installationValue" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="actors" type="tns:ArrayOfInt" />
-            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetShipmentByOrderNumberResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetShipmentByOrderNumberResult" type="tns:Response" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetShipmentsByOrderNumber">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="installationValue" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="actors" type="tns:ArrayOfInt" />
-            <s:element minOccurs="0" maxOccurs="1" name="referenceNumber" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetShipmentsByOrderNumberResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetShipmentsByOrderNumberResult" type="tns:Response" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetShipmentByPackageNumber">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="installationValue" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="actors" type="tns:ArrayOfInt" />
-            <s:element minOccurs="0" maxOccurs="1" name="packageNumber" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetShipmentByPackageNumberResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetShipmentByPackageNumberResult" type="tns:Response" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetShipmentByDateRange">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="installationValue" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="actors" type="tns:ArrayOfInt" />
-            <s:element minOccurs="1" maxOccurs="1" name="startDate" type="s:dateTime" />
-            <s:element minOccurs="1" maxOccurs="1" name="endDate" type="s:dateTime" />
-            <s:element minOccurs="1" maxOccurs="1" name="pageIndex" type="s:int" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetShipmentByDateRangeResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetShipmentByDateRangeResult" type="tns:Response" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetEvents">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="eventDateTimeStart" type="s:dateTime" />
-            <s:element minOccurs="1" maxOccurs="1" name="eventDateTimeEnd" type="s:dateTime" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetEventsResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetEventsResult" type="tns:EventResponse" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="EventResponse">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="Events" type="tns:ArrayOfChoice1" />
-          <s:element minOccurs="0" maxOccurs="1" name="ResponseStatus" type="tns:ResponseStatus" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="ArrayOfChoice1">
-        <s:choice minOccurs="0" maxOccurs="unbounded">
-          <s:element minOccurs="1" maxOccurs="1" name="ConsignorEventDto" nillable="true" type="tns:ConsignorEventDto" />
-          <s:element minOccurs="1" maxOccurs="1" name="CarrierMeasurement" nillable="true" type="tns:CarrierMeasurement" />
-          <s:element minOccurs="1" maxOccurs="1" name="TrackAndTraceDto" nillable="true" type="tns:TrackAndTraceDto" />
-        </s:choice>
-      </s:complexType>
-      <s:element name="GetEventsByEventCode">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="eventDateTimeStart" type="s:dateTime" />
-            <s:element minOccurs="1" maxOccurs="1" name="eventDateTimeEnd" type="s:dateTime" />
-            <s:element minOccurs="0" maxOccurs="1" name="eventCode" type="tns:ArrayOfString" />
-            <s:element minOccurs="0" maxOccurs="1" name="actorId" type="tns:ArrayOfInt" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="ArrayOfString">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="GetEventsByEventCodeResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetEventsByEventCodeResult" type="tns:EventResponseByEvent" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="EventResponseByEvent">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="Events" type="tns:ArrayOfChoice2" />
-          <s:element minOccurs="0" maxOccurs="1" name="ResponseStatus" type="tns:ResponseStatus" />
-          <s:element minOccurs="1" maxOccurs="1" name="StartDate" type="s:dateTime" />
-          <s:element minOccurs="1" maxOccurs="1" name="EndDate" type="s:dateTime" />
-          <s:element minOccurs="0" maxOccurs="1" name="EventCodes" type="tns:ArrayOfString" />
-          <s:element minOccurs="0" maxOccurs="1" name="ActorIds" type="tns:ArrayOfInt" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="ArrayOfChoice2">
-        <s:choice minOccurs="0" maxOccurs="unbounded">
-          <s:element minOccurs="1" maxOccurs="1" name="ConsignorEventDto" nillable="true" type="tns:ConsignorEventDto" />
-          <s:element minOccurs="1" maxOccurs="1" name="CarrierMeasurement" nillable="true" type="tns:CarrierMeasurement" />
-          <s:element minOccurs="1" maxOccurs="1" name="TrackAndTraceDto" nillable="true" type="tns:TrackAndTraceDto" />
-        </s:choice>
-      </s:complexType>
-      <s:element name="VerifyCount">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
-            <s:element minOccurs="1" maxOccurs="1" name="eventDateTimeStart" type="s:dateTime" />
-            <s:element minOccurs="1" maxOccurs="1" name="eventDateTimeEnd" type="s:dateTime" />
-            <s:element minOccurs="0" maxOccurs="1" name="eventCode" type="tns:ArrayOfString" />
-            <s:element minOccurs="0" maxOccurs="1" name="actorId" type="tns:ArrayOfInt" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="VerifyCountResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="VerifyCountResult" type="tns:EventCountResponse" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:complexType name="EventCountResponse">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="ResponseStatus" type="tns:ResponseStatus" />
-        </s:sequence>
-      </s:complexType>
-      <s:element name="GetShipmentStatus">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
-            <s:element minOccurs="0" maxOccurs="1" name="number" type="s:string" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="GetShipmentStatusResponse">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetShipmentStatusResult" type="tns:EventResponse" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-    </s:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://edisoftwebservices.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.ExportDomain"/>
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.ImportDomain"/>
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/EDISoft.Portal.Endpoints.Services.PortalDataWS"/>
+      <xs:element name="GetShipmentsByShipmentNumber">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="installationValue" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="actors" nillable="true" type="q1:ArrayOfint" xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+            <xs:element minOccurs="0" name="shipmentNumber" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="startDateTime" nillable="true" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="endDateTime" nillable="true" type="xs:dateTime"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetShipmentsByShipmentNumberResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetShipmentsByShipmentNumberResult" nillable="true" type="q2:ArrayOfShipment" xmlns:q2="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.ExportDomain"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetShipmentsByOrderNumber">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="installationValue" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="actors" nillable="true" type="q3:ArrayOfint" xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+            <xs:element minOccurs="0" name="referenceNumber" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="startDateTime" nillable="true" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="endDateTime" nillable="true" type="xs:dateTime"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetShipmentsByOrderNumberResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetShipmentsByOrderNumberResult" nillable="true" type="q4:ArrayOfShipment" xmlns:q4="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.ExportDomain"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetShipmentsByPackageNumber">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="installationValue" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="actors" nillable="true" type="q5:ArrayOfint" xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+            <xs:element minOccurs="0" name="packageNumber" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="startDateTime" nillable="true" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="endDateTime" nillable="true" type="xs:dateTime"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetShipmentsByPackageNumberResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetShipmentsByPackageNumberResult" nillable="true" type="q6:ArrayOfShipment" xmlns:q6="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.ExportDomain"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetShipmentsByDateRange">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="installationValue" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="actors" nillable="true" type="q7:ArrayOfint" xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+            <xs:element minOccurs="0" name="startDateTime" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="endDateTime" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="pageIndex" type="xs:int"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetShipmentsByDateRangeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetShipmentsByDateRangeResult" nillable="true" type="q8:ArrayOfShipment" xmlns:q8="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.ExportDomain"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetEvents">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="eventDateTimeStart" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="eventDateTimeEnd" type="xs:dateTime"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetEventsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetEventsResult" nillable="true" type="q9:ArrayOfEvent" xmlns:q9="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.ExportDomain"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCarrierEventsByEventCode">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="eventDateTimeStart" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="eventDateTimeEnd" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="eventCodes" nillable="true" type="q10:ArrayOfstring" xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+            <xs:element minOccurs="0" name="installationValue" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="actors" nillable="true" type="q11:ArrayOfint" xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCarrierEventsByEventCodeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetCarrierEventsByEventCodeResult" nillable="true" type="q12:ArrayOfEvent" xmlns:q12="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.ExportDomain"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetShipmentStatus">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="shipmentNumber" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="startDateTime" nillable="true" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="endDateTime" nillable="true" type="xs:dateTime"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetShipmentStatusResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetShipmentStatusResult" nillable="true" type="q13:ArrayOfEvent" xmlns:q13="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.ExportDomain"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SendEvent">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="submitEvent" nillable="true" type="q14:ImportEvent" xmlns:q14="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.ImportDomain"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SendEventResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="SendEventResult" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IsShipmentClosed">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="barcode" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="IsShipmentClosedResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="IsShipmentClosedResult" nillable="true" type="q15:ArrayOfStatusInfo" xmlns:q15="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.ExportDomain"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CheckHealth">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CheckHealthResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="CheckHealthResult" nillable="true" type="q16:HealthResponse" xmlns:q16="http://schemas.datacontract.org/2004/07/EDISoft.Portal.Endpoints.Services.PortalDataWS"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/">
+      <xs:element name="anyType" nillable="true" type="xs:anyType"/>
+      <xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+      <xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+      <xs:element name="boolean" nillable="true" type="xs:boolean"/>
+      <xs:element name="byte" nillable="true" type="xs:byte"/>
+      <xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+      <xs:element name="decimal" nillable="true" type="xs:decimal"/>
+      <xs:element name="double" nillable="true" type="xs:double"/>
+      <xs:element name="float" nillable="true" type="xs:float"/>
+      <xs:element name="int" nillable="true" type="xs:int"/>
+      <xs:element name="long" nillable="true" type="xs:long"/>
+      <xs:element name="QName" nillable="true" type="xs:QName"/>
+      <xs:element name="short" nillable="true" type="xs:short"/>
+      <xs:element name="string" nillable="true" type="xs:string"/>
+      <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+      <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+      <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+      <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+      <xs:element name="char" nillable="true" type="tns:char"/>
+      <xs:simpleType name="char">
+        <xs:restriction base="xs:int"/>
+      </xs:simpleType>
+      <xs:element name="duration" nillable="true" type="tns:duration"/>
+      <xs:simpleType name="duration">
+        <xs:restriction base="xs:duration">
+          <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+          <xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+          <xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="guid" nillable="true" type="tns:guid"/>
+      <xs:simpleType name="guid">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:attribute name="FactoryType" type="xs:QName"/>
+      <xs:attribute name="Id" type="xs:ID"/>
+      <xs:attribute name="Ref" type="xs:IDREF"/>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+      <xs:complexType name="ArrayOfint">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="int" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfint" nillable="true" type="tns:ArrayOfint"/>
+      <xs:complexType name="ArrayOfstring">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfstring" nillable="true" type="tns:ArrayOfstring"/>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.ExportDomain" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.ExportDomain" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/">
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain"/>
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.Events.Interfaces"/>
+      <xs:complexType name="ArrayOfShipment">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Shipment" nillable="true" type="tns:Shipment"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfShipment" nillable="true" type="tns:ArrayOfShipment"/>
+      <xs:complexType name="Shipment">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ActorCsid" type="xs:int"/>
+          <xs:element minOccurs="0" name="ActorName" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Addresses" nillable="true" type="tns:ArrayOfAddress">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Amounts" nillable="true" type="tns:ArrayOfAmount">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Barcode1" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Barcode2" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="BatchCsid" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CarriagePayer" type="q1:CarriagePayer" xmlns:q1="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CarrierId" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CarrierName" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Details" nillable="true" type="tns:ArrayOfDetail">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DimensionalWeight" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Esid" type="xs:long"/>
+          <xs:element minOccurs="0" name="Events" nillable="true" type="tns:ArrayOfEvent">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ExpireDate" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="FreightBillsCount" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Height" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ImportDate" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="InstallationId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="InstallationName" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="InsuranceGroup" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="IsConceptCarrier" type="xs:boolean">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="IsConceptProduct" type="xs:boolean">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LabelPrintDate" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LabelsCount" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LatestStatusText" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Length" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Lines" nillable="true" type="tns:ArrayOfLine">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LinesSummedWeights" type="xs:decimal">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Loadmeter" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LocationId" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LocationName" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Messages" nillable="true" type="tns:ArrayOfMessage">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Number" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="NumberOfPackages" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="OrderNumber" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="OriginPostcode" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="OriginTerminal" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PackageUid" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PayerAccountAtCarrier" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PhysicalInstallationId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="PickupDate" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PickupTerminal" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ProductId" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ProductIsReturn" type="xs:boolean">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ProductName" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="References" nillable="true" type="tns:ArrayOfReference">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ReturnPackaging" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SearchKey" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SenderAccountAtBank" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SenderAccountAtCarrier" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Services" nillable="true" type="tns:ArrayOfService">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ShipmentConnections" nillable="true" type="tns:ArrayOfShipmentConnection">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ShipmentCsid" type="xs:int"/>
+          <xs:element minOccurs="0" name="ShipmentCustomDocuments" nillable="true" type="q2:ArrayOfShipmentCustomDocument" xmlns:q2="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ShipmentDocuments" nillable="true" type="q3:ArrayOfShipmentDocument" xmlns:q3="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ShipmentKind" type="q4:ShipmentKind" xmlns:q4="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain"/>
+          <xs:element minOccurs="0" name="ShipmentStatus" type="q5:RadarStatusType" xmlns:q5="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ShipmentTemperature" type="q6:ShipmentTemperature" xmlns:q6="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="StackCsid" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SubcarrierId" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SubcarrierName" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SubmitDate" type="xs:dateTime">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="TransmitDate" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="UsedInstallationIsVirtual" type="xs:boolean">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="VolumeCM" type="xs:decimal">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Width" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Shipment" nillable="true" type="tns:Shipment"/>
+      <xs:complexType name="ArrayOfAddress">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Address" nillable="true" type="tns:Address"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfAddress" nillable="true" type="tns:ArrayOfAddress"/>
+      <xs:complexType name="Address">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Attention" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="City" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CountryClientId" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CountryCode" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CountryName" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CustNo" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ERPRef" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Fax" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Kind" type="q7:AddressKind" xmlns:q7="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Mobile" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Name1" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Name2" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="OpeningHours" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="POBox" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="POCity" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="POPostCode" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Phone" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PostCode" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ReceiverRef" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Street1" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Street2" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Address" nillable="true" type="tns:Address"/>
+      <xs:complexType name="ArrayOfAmount">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Amount" nillable="true" type="tns:Amount"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfAmount" nillable="true" type="tns:ArrayOfAmount"/>
+      <xs:complexType name="Amount">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CurrencyClientId" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CurrencyCode" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Kind" type="q8:AmountKind" xmlns:q8="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Value" type="xs:decimal">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Amount" nillable="true" type="tns:Amount"/>
+      <xs:complexType name="ArrayOfDetail">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Detail" nillable="true" type="tns:Detail"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfDetail" nillable="true" type="tns:ArrayOfDetail"/>
+      <xs:complexType name="Detail">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DataType" type="q9:FieldDataType" xmlns:q9="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain"/>
+          <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="GroupDisplayName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="GroupName" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Listing" nillable="true" type="xs:int"/>
+          <xs:element minOccurs="0" name="State" type="xs:int"/>
+          <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Detail" nillable="true" type="tns:Detail"/>
+      <xs:complexType name="ArrayOfEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Event" nillable="true" type="tns:Event"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfEvent" nillable="true" type="tns:ArrayOfEvent"/>
+      <xs:complexType name="Event">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BaseEventGuid" type="ser:guid">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CarrierName" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="CityName" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Date" type="xs:dateTime">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DeviceId" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DiscountAmount" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DynamicList" nillable="true" type="tns:ArrayOfDynamicProperty">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="EpiNumber" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ExtraFieldValue" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="FileBase64" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="FileUrl" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="GpsLatitude" type="xs:double">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="GpsLongitude" type="xs:double">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Height" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="KindId" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Length" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LoadMeter" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LocationDesc" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LocationId" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="MobileEventCode" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="NameInSignature" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Origin" type="q10:BaseEvent.EventOrigin" xmlns:q10="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.Events.Interfaces">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Parent" nillable="true" type="tns:EventParent">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PostalCode" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PriceBruto" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PriceNetto" nillable="true" type="xs:decimal">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ServerDate" nillable="true" type="xs:dateTime">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SignatureUrl" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="StatusCode" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="StatusState" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="StatusText" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SubEventList" nillable="true" type="tns:SubEvent">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Type" type="q11:BaseEvent.EventType" xmlns:q11="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.Events.Interfaces"/>
+          <xs:element minOccurs="0" name="UserId" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Volume" nillable="true" type="xs:long">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Weight" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Width" nillable="true" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Event" nillable="true" type="tns:Event"/>
+      <xs:complexType name="ArrayOfDynamicProperty">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="DynamicProperty" nillable="true" type="tns:DynamicProperty"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfDynamicProperty" nillable="true" type="tns:ArrayOfDynamicProperty"/>
+      <xs:complexType name="DynamicProperty">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Key" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="DynamicProperty" nillable="true" type="tns:DynamicProperty"/>
+      <xs:complexType name="EventParent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Barcode" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Esid" type="xs:long"/>
+          <xs:element minOccurs="0" name="IsShipment" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="OrderNumber" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="EventParent" nillable="true" type="tns:EventParent"/>
+      <xs:complexType name="SubEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="HasSpecialValue" type="xs:unsignedShort">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SubEventType" type="tns:SubEventTypes"/>
+          <xs:element minOccurs="0" name="SubEvents" nillable="true" type="tns:ArrayOfSubEvent">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="SubEvent" nillable="true" type="tns:SubEvent"/>
+      <xs:simpleType name="SubEventTypes">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Simple"/>
+          <xs:enumeration value="Text"/>
+          <xs:enumeration value="Image"/>
+          <xs:enumeration value="Date"/>
+          <xs:enumeration value="Time"/>
+          <xs:enumeration value="DateTime"/>
+          <xs:enumeration value="Number"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="SubEventTypes" nillable="true" type="tns:SubEventTypes"/>
+      <xs:complexType name="ArrayOfSubEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="SubEvent" nillable="true" type="tns:SubEvent"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfSubEvent" nillable="true" type="tns:ArrayOfSubEvent"/>
+      <xs:complexType name="ArrayOfLine">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Line" nillable="true" type="tns:Line"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfLine" nillable="true" type="tns:ArrayOfLine"/>
+      <xs:complexType name="Line">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DangerousGoods" nillable="true" type="tns:ArrayOfDangerousGoods">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="DimensionalWeight" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="GoodsTypeId" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="GoodsTypeKey1" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="GoodsTypeKey2" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="GoodsTypeName" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Height" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Length" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LineNumberOfPackages" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LineUnits" nillable="true" type="q12:ArrayOfLineUnit" xmlns:q12="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LineVolume" type="xs:long">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LineWeight" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Loadmeter" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Number" type="xs:int"/>
+          <xs:element minOccurs="0" name="PackageVolume" type="xs:long">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PackageWeight" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Packages" nillable="true" type="tns:ArrayOfPackage"/>
+          <xs:element minOccurs="0" name="RecycleCount" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="RecycleTypeCode" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="RecycleTypeId" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="RecycleTypeName" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="References" nillable="true" type="tns:ArrayOfReference">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Width" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Line" nillable="true" type="tns:Line"/>
+      <xs:complexType name="ArrayOfDangerousGoods">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="DangerousGoods" nillable="true" type="tns:DangerousGoods"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfDangerousGoods" nillable="true" type="tns:ArrayOfDangerousGoods"/>
+      <xs:complexType name="DangerousGoods">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ADRtankSpecialProvision" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ADRtankTankCode" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Class" type="q13:DangerousGoodsClass" xmlns:q13="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Classification" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Count" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="EMSNo" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ExceptedQuantities" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="FlashPoint" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="GoodsLineId" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="GrossWeight" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="IdentificationNo" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Kind" type="q14:DangerousGoodsKind" xmlns:q14="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LQCount" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LQGrossWeight" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Labels" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="LimitedQuantities" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="MarinePollutant" type="q15:DangerousGoodsMarinePollutant" xmlns:q15="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="MfagNo" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="MixedPackingProvision" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="NetWeight" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PackingGroup" type="q16:DangerousGoodsPackingGroup" xmlns:q16="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PackingInstructions" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PackingTypeKey" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PackingTypeName" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PageNo" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PortTankBulkContInstructions" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="PortTankBulkContSpecialProvisions" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SecondaryClasses" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SpecialPackingProvision" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SpecialProvisions" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SpecialProvisionsBulk" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SpecialProvisionsHandling" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SpecialProvisionsOperation" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="SpecialProvisionsPackages" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="StowingCategory" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="TransportCategory" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="UN" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Vehicle" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Vol" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="DangerousGoods" nillable="true" type="tns:DangerousGoods"/>
+      <xs:complexType name="ArrayOfPackage">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Package" nillable="true" type="tns:Package"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfPackage" nillable="true" type="tns:ArrayOfPackage"/>
+      <xs:complexType name="Package">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Barcode1" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Barcode2" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Details" nillable="true" type="tns:ArrayOfDetail">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Events" nillable="true" type="tns:ArrayOfEvent">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ItemNumber" type="xs:int"/>
+          <xs:element minOccurs="0" name="Number" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="References" nillable="true" type="tns:ArrayOfReference">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Package" nillable="true" type="tns:Package"/>
+      <xs:complexType name="ArrayOfReference">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Reference" nillable="true" type="tns:Reference"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfReference" nillable="true" type="tns:ArrayOfReference"/>
+      <xs:complexType name="Reference">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Kind" type="xs:int"/>
+          <xs:element minOccurs="0" name="KindText" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Reference" nillable="true" type="tns:Reference"/>
+      <xs:complexType name="ArrayOfMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Message" nillable="true" type="tns:Message"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfMessage" nillable="true" type="tns:ArrayOfMessage"/>
+      <xs:complexType name="Message">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Kind" type="q17:ShipmentMessageKind" xmlns:q17="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Message" nillable="true" type="tns:Message"/>
+      <xs:complexType name="ArrayOfService">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Service" nillable="true" type="tns:Service"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfService" nillable="true" type="tns:ArrayOfService"/>
+      <xs:complexType name="Service">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ServiceId" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="ServiceName" nillable="true" type="xs:string">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Service" nillable="true" type="tns:Service"/>
+      <xs:complexType name="ArrayOfShipmentConnection">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ShipmentConnection" nillable="true" type="tns:ShipmentConnection"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfShipmentConnection" nillable="true" type="tns:ArrayOfShipmentConnection"/>
+      <xs:complexType name="ShipmentConnection">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ChildCsid" type="xs:int">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" name="Kind" type="q18:ShipmentConnectionKind" xmlns:q18="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain">
+            <xs:annotation>
+              <xs:appinfo>
+                <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ShipmentConnection" nillable="true" type="tns:ShipmentConnection"/>
+      <xs:complexType name="ArrayOfStatusInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="StatusInfo" nillable="true" type="tns:StatusInfo"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfStatusInfo" nillable="true" type="tns:ArrayOfStatusInfo"/>
+      <xs:complexType name="StatusInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Barcode" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="IsClosed" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="ShipmentNumber" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="StatusInfo" nillable="true" type="tns:StatusInfo"/>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xs:simpleType name="AddressKind">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Unknown"/>
+          <xs:enumeration value="Receiver"/>
+          <xs:enumeration value="Sender"/>
+          <xs:enumeration value="PickUp"/>
+          <xs:enumeration value="Payer"/>
+          <xs:enumeration value="Buyer"/>
+          <xs:enumeration value="Temporary"/>
+          <xs:enumeration value="Message"/>
+          <xs:enumeration value="Forwarder"/>
+          <xs:enumeration value="ReturnTo"/>
+          <xs:enumeration value="DropPoint"/>
+          <xs:enumeration value="Depot"/>
+          <xs:enumeration value="Comeback"/>
+          <xs:enumeration value="Broker"/>
+          <xs:enumeration value="Delivery"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="AddressKind" nillable="true" type="tns:AddressKind"/>
+      <xs:simpleType name="AmountKind">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Unknown"/>
+          <xs:enumeration value="Price1"/>
+          <xs:enumeration value="Price2"/>
+          <xs:enumeration value="Price3"/>
+          <xs:enumeration value="InsuranceValue"/>
+          <xs:enumeration value="CodAmount"/>
+          <xs:enumeration value="CarrierSpecifiedPrice"/>
+          <xs:enumeration value="CarrierSpecifiedCodAmount"/>
+          <xs:enumeration value="InsuranceAmountPerPackage"/>
+          <xs:enumeration value="FixedPrice"/>
+          <xs:enumeration value="InvoiceAmount"/>
+          <xs:enumeration value="CodAmountOriginal"/>
+          <xs:enumeration value="ThirdPartyInsurance"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="AmountKind" nillable="true" type="tns:AmountKind"/>
+      <xs:simpleType name="CarriagePayer">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Unknown"/>
+          <xs:enumeration value="Sender"/>
+          <xs:enumeration value="Receiver"/>
+          <xs:enumeration value="Other"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="CarriagePayer" nillable="true" type="tns:CarriagePayer"/>
+      <xs:simpleType name="FieldDataType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="efkString"/>
+          <xs:enumeration value="efkCountry"/>
+          <xs:enumeration value="efkCurrency"/>
+          <xs:enumeration value="efkInt"/>
+          <xs:enumeration value="efkFloat"/>
+          <xs:enumeration value="efkDate"/>
+          <xs:enumeration value="efkTime"/>
+          <xs:enumeration value="efkDateTime"/>
+          <xs:enumeration value="efkNone"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="FieldDataType" nillable="true" type="tns:FieldDataType"/>
+      <xs:simpleType name="DangerousGoodsClass">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Unknown"/>
+          <xs:enumeration value="Class1"/>
+          <xs:enumeration value="Class2"/>
+          <xs:enumeration value="Class2_1"/>
+          <xs:enumeration value="Class3"/>
+          <xs:enumeration value="Class4"/>
+          <xs:enumeration value="Class4_1"/>
+          <xs:enumeration value="Class4_2"/>
+          <xs:enumeration value="Class4_3"/>
+          <xs:enumeration value="Class5_1"/>
+          <xs:enumeration value="Class5_2"/>
+          <xs:enumeration value="Class6_1"/>
+          <xs:enumeration value="Class6_2"/>
+          <xs:enumeration value="Class7"/>
+          <xs:enumeration value="Class8"/>
+          <xs:enumeration value="Class9"/>
+          <xs:enumeration value="Class1_1A"/>
+          <xs:enumeration value="Class1_1B"/>
+          <xs:enumeration value="Class1_1C"/>
+          <xs:enumeration value="Class1_1E"/>
+          <xs:enumeration value="Class1_1F"/>
+          <xs:enumeration value="Class1_1G"/>
+          <xs:enumeration value="Class1_1J"/>
+          <xs:enumeration value="Class1_1L"/>
+          <xs:enumeration value="Class1_2B"/>
+          <xs:enumeration value="Class1_2C"/>
+          <xs:enumeration value="Class1_2D"/>
+          <xs:enumeration value="Class1_2F"/>
+          <xs:enumeration value="Class1_2G"/>
+          <xs:enumeration value="Class1_2H"/>
+          <xs:enumeration value="Class1_2J"/>
+          <xs:enumeration value="Class1_2K"/>
+          <xs:enumeration value="Class1_2L"/>
+          <xs:enumeration value="Class1_3C"/>
+          <xs:enumeration value="Class1_3G"/>
+          <xs:enumeration value="Class1_3H"/>
+          <xs:enumeration value="Class1_3J"/>
+          <xs:enumeration value="Class1_3K"/>
+          <xs:enumeration value="Class1_3L"/>
+          <xs:enumeration value="Class1_4B"/>
+          <xs:enumeration value="Class1_4C"/>
+          <xs:enumeration value="Class1_4D"/>
+          <xs:enumeration value="Class1_4E"/>
+          <xs:enumeration value="Class1_4F"/>
+          <xs:enumeration value="Class1_4G"/>
+          <xs:enumeration value="Class1_4S"/>
+          <xs:enumeration value="Class1_5D"/>
+          <xs:enumeration value="Class1_6N"/>
+          <xs:enumeration value="Class2_2"/>
+          <xs:enumeration value="Class2_3"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="DangerousGoodsClass" nillable="true" type="tns:DangerousGoodsClass"/>
+      <xs:simpleType name="DangerousGoodsKind">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ADRRID"/>
+          <xs:enumeration value="IMD"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="DangerousGoodsKind" nillable="true" type="tns:DangerousGoodsKind"/>
+      <xs:simpleType name="DangerousGoodsMarinePollutant">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Unknown"/>
+          <xs:enumeration value="None"/>
+          <xs:enumeration value="IMDG"/>
+          <xs:enumeration value="ADR"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="DangerousGoodsMarinePollutant" nillable="true" type="tns:DangerousGoodsMarinePollutant"/>
+      <xs:simpleType name="DangerousGoodsPackingGroup">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="None"/>
+          <xs:enumeration value="I"/>
+          <xs:enumeration value="II"/>
+          <xs:enumeration value="III"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="DangerousGoodsPackingGroup" nillable="true" type="tns:DangerousGoodsPackingGroup"/>
+      <xs:complexType name="ArrayOfLineUnit">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="LineUnit" nillable="true" type="tns:LineUnit"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfLineUnit" nillable="true" type="tns:ArrayOfLineUnit"/>
+      <xs:complexType name="LineUnit">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:GenericEntity">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Count" type="xs:int"/>
+              <xs:element minOccurs="0" name="KindId" type="xs:int"/>
+              <xs:element minOccurs="0" name="LineId" type="xs:int"/>
+              <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="Vol" type="xs:int"/>
+              <xs:element minOccurs="0" name="Weight" type="xs:int"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="LineUnit" nillable="true" type="tns:LineUnit"/>
+      <xs:complexType name="GenericEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Id" type="xs:int"/>
+          <xs:element minOccurs="0" name="TimeStamp" nillable="true" type="xs:base64Binary"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GenericEntity" nillable="true" type="tns:GenericEntity"/>
+      <xs:simpleType name="ShipmentMessageKind">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Unknown"/>
+          <xs:enumeration value="Driver"/>
+          <xs:enumeration value="Carrier"/>
+          <xs:enumeration value="Receiver"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="ShipmentMessageKind" nillable="true" type="tns:ShipmentMessageKind"/>
+      <xs:simpleType name="ShipmentConnectionKind">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Unknown"/>
+          <xs:enumeration value="ChildIsComeback"/>
+          <xs:enumeration value="ChildIsGroupMember"/>
+          <xs:enumeration value="ChildIsCompletionSub"/>
+          <xs:enumeration value="ChildIsBulksplitSub"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="ShipmentConnectionKind" nillable="true" type="tns:ShipmentConnectionKind"/>
+      <xs:complexType name="ArrayOfShipmentCustomDocument">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ShipmentCustomDocument" nillable="true" type="tns:ShipmentCustomDocument"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfShipmentCustomDocument" nillable="true" type="tns:ArrayOfShipmentCustomDocument"/>
+      <xs:complexType name="ShipmentCustomDocument">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:GenericEntity">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Content" nillable="true" type="tns:BinaryContent"/>
+              <xs:element minOccurs="0" name="ContentType" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="CreationDate" nillable="true" type="xs:dateTime"/>
+              <xs:element minOccurs="0" name="DocumentAccess" nillable="true" type="tns:DocumentAccess"/>
+              <xs:element minOccurs="0" name="DocumentAccessId" nillable="true" type="xs:int"/>
+              <xs:element minOccurs="0" name="DocumentName" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="ShipmentId" type="xs:int"/>
+              <xs:element minOccurs="0" name="UploadedByUser" nillable="true" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="ShipmentCustomDocument" nillable="true" type="tns:ShipmentCustomDocument"/>
+      <xs:complexType name="BinaryContent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BinaryContentGUId" type="ser:guid"/>
+          <xs:element minOccurs="0" name="Content" nillable="true" type="xs:base64Binary"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="BinaryContent" nillable="true" type="tns:BinaryContent"/>
+      <xs:complexType name="DocumentAccess">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:GenericEntity">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="ExpirationDate" nillable="true" type="xs:dateTime"/>
+              <xs:element minOccurs="0" name="PIN" nillable="true" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="DocumentAccess" nillable="true" type="tns:DocumentAccess"/>
+      <xs:complexType name="ArrayOfShipmentDocument">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ShipmentDocument" nillable="true" type="tns:ShipmentDocument"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfShipmentDocument" nillable="true" type="tns:ArrayOfShipmentDocument"/>
+      <xs:complexType name="ShipmentDocument">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:GenericEntity">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Count" type="xs:int"/>
+              <xs:element minOccurs="0" name="DatePrinted" nillable="true" type="xs:dateTime"/>
+              <xs:element minOccurs="0" name="DocContent" nillable="true" type="tns:BinaryContent"/>
+              <xs:element minOccurs="0" name="DocumentAccess" nillable="true" type="tns:DocumentAccess"/>
+              <xs:element minOccurs="0" name="DocumentAccessId" nillable="true" type="xs:int"/>
+              <xs:element minOccurs="0" name="ManualPrint" type="xs:boolean"/>
+              <xs:element minOccurs="0" name="PrintBox" type="xs:int"/>
+              <xs:element minOccurs="0" name="PrinterPath" nillable="true" type="xs:string"/>
+              <xs:element minOccurs="0" name="ShipmentId" type="xs:int"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="ShipmentDocument" nillable="true" type="tns:ShipmentDocument"/>
+      <xs:simpleType name="ShipmentKind">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Unknown"/>
+          <xs:enumeration value="Normal"/>
+          <xs:enumeration value="Comeback"/>
+          <xs:enumeration value="Group"/>
+          <xs:enumeration value="Incomming">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1000</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CHOD">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1001</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ScanAppMatched">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1002</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CustomCreated">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1010</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="ShipmentKind" nillable="true" type="tns:ShipmentKind"/>
+      <xs:simpleType name="RadarStatusType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Open"/>
+          <xs:enumeration value="InProgress"/>
+          <xs:enumeration value="Closed"/>
+          <xs:enumeration value="PartiallyClosed"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="RadarStatusType" nillable="true" type="tns:RadarStatusType"/>
+      <xs:simpleType name="ShipmentTemperature">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Unknown"/>
+          <xs:enumeration value="Normal"/>
+          <xs:enumeration value="Heat"/>
+          <xs:enumeration value="Cool"/>
+          <xs:enumeration value="Freeze"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="ShipmentTemperature" nillable="true" type="tns:ShipmentTemperature"/>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.Events.Interfaces" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.Events.Interfaces">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xs:simpleType name="BaseEvent.EventOrigin">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Consignor">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ReturnData">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="MobileScanApp">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="MobileHandheld">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="PortalStatus">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ClientData">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="PortalEdit">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="BaseEvent.EventOrigin" nillable="true" type="tns:BaseEvent.EventOrigin"/>
+      <xs:simpleType name="BaseEvent.EventType">
+        <xs:list>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="Unspecified">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">0</EnumerationValue>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="TrackAndTrace">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="Measurement">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:enumeration>
+              <xs:enumeration value="Price">
+                <xs:annotation>
+                  <xs:appinfo>
+                    <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+                  </xs:appinfo>
+                </xs:annotation>
+              </xs:enumeration>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:list>
+      </xs:simpleType>
+      <xs:element name="BaseEvent.EventType" nillable="true" type="tns:BaseEvent.EventType"/>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.ImportDomain" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.ImportDomain">
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.Events"/>
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xs:complexType name="ImportEvent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AttachmentByte" nillable="true" type="xs:base64Binary"/>
+          <xs:element minOccurs="0" name="AttachmentType" nillable="true" type="tns:AttachmentType"/>
+          <xs:element name="Date" type="xs:dateTime"/>
+          <xs:element name="ParentIdentifier" nillable="true" type="q1:Identifier" xmlns:q1="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.Events"/>
+          <xs:element name="StatusCode" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="StatusIsClosed" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="StatusText" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ImportEvent" nillable="true" type="tns:ImportEvent"/>
+      <xs:simpleType name="AttachmentType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Picture">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Text">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="AttachmentType" nillable="true" type="tns:AttachmentType"/>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.Events" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/EdiSoft.Common.Domain.Events">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xs:complexType name="Identifier">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="IdentifierType" type="tns:IdentifierType"/>
+          <xs:element minOccurs="0" name="IdentifierValue" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Identifier" nillable="true" type="tns:Identifier"/>
+      <xs:simpleType name="IdentifierType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Barcode">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="OrderNo">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ReciverRefrence">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="IdentifierType" nillable="true" type="tns:IdentifierType"/>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/EDISoft.Portal.Endpoints.Services.PortalDataWS" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/EDISoft.Portal.Endpoints.Services.PortalDataWS">
+      <xs:complexType name="HealthResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="HealthStatus" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="HealthResponse" nillable="true" type="tns:HealthResponse"/>
+    </xs:schema>
   </wsdl:types>
-  <wsdl:message name="GetShipmentByShipmentNumberSoapIn">
-    <wsdl:part name="parameters" element="tns:GetShipmentByShipmentNumber" />
+  <wsdl:message name="IPortalData_GetShipmentsByShipmentNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetShipmentsByShipmentNumber"/>
   </wsdl:message>
-  <wsdl:message name="GetShipmentByShipmentNumberSoapOut">
-    <wsdl:part name="parameters" element="tns:GetShipmentByShipmentNumberResponse" />
+  <wsdl:message name="IPortalData_GetShipmentsByShipmentNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetShipmentsByShipmentNumberResponse"/>
   </wsdl:message>
-  <wsdl:message name="GetShipmentByOrderNumberSoapIn">
-    <wsdl:part name="parameters" element="tns:GetShipmentByOrderNumber" />
+  <wsdl:message name="IPortalData_GetShipmentsByOrderNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetShipmentsByOrderNumber"/>
   </wsdl:message>
-  <wsdl:message name="GetShipmentByOrderNumberSoapOut">
-    <wsdl:part name="parameters" element="tns:GetShipmentByOrderNumberResponse" />
+  <wsdl:message name="IPortalData_GetShipmentsByOrderNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetShipmentsByOrderNumberResponse"/>
   </wsdl:message>
-  <wsdl:message name="GetShipmentsByOrderNumberSoapIn">
-    <wsdl:part name="parameters" element="tns:GetShipmentsByOrderNumber" />
+  <wsdl:message name="IPortalData_GetShipmentsByPackageNumber_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetShipmentsByPackageNumber"/>
   </wsdl:message>
-  <wsdl:message name="GetShipmentsByOrderNumberSoapOut">
-    <wsdl:part name="parameters" element="tns:GetShipmentsByOrderNumberResponse" />
+  <wsdl:message name="IPortalData_GetShipmentsByPackageNumber_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetShipmentsByPackageNumberResponse"/>
   </wsdl:message>
-  <wsdl:message name="GetShipmentByPackageNumberSoapIn">
-    <wsdl:part name="parameters" element="tns:GetShipmentByPackageNumber" />
+  <wsdl:message name="IPortalData_GetShipmentsByDateRange_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetShipmentsByDateRange"/>
   </wsdl:message>
-  <wsdl:message name="GetShipmentByPackageNumberSoapOut">
-    <wsdl:part name="parameters" element="tns:GetShipmentByPackageNumberResponse" />
+  <wsdl:message name="IPortalData_GetShipmentsByDateRange_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetShipmentsByDateRangeResponse"/>
   </wsdl:message>
-  <wsdl:message name="GetShipmentByDateRangeSoapIn">
-    <wsdl:part name="parameters" element="tns:GetShipmentByDateRange" />
+  <wsdl:message name="IPortalData_GetEvents_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEvents"/>
   </wsdl:message>
-  <wsdl:message name="GetShipmentByDateRangeSoapOut">
-    <wsdl:part name="parameters" element="tns:GetShipmentByDateRangeResponse" />
+  <wsdl:message name="IPortalData_GetEvents_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEventsResponse"/>
   </wsdl:message>
-  <wsdl:message name="GetEventsSoapIn">
-    <wsdl:part name="parameters" element="tns:GetEvents" />
+  <wsdl:message name="IPortalData_GetCarrierEventsByEventCode_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCarrierEventsByEventCode"/>
   </wsdl:message>
-  <wsdl:message name="GetEventsSoapOut">
-    <wsdl:part name="parameters" element="tns:GetEventsResponse" />
+  <wsdl:message name="IPortalData_GetCarrierEventsByEventCode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCarrierEventsByEventCodeResponse"/>
   </wsdl:message>
-  <wsdl:message name="GetEventsByEventCodeSoapIn">
-    <wsdl:part name="parameters" element="tns:GetEventsByEventCode" />
+  <wsdl:message name="IPortalData_GetShipmentStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetShipmentStatus"/>
   </wsdl:message>
-  <wsdl:message name="GetEventsByEventCodeSoapOut">
-    <wsdl:part name="parameters" element="tns:GetEventsByEventCodeResponse" />
+  <wsdl:message name="IPortalData_GetShipmentStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetShipmentStatusResponse"/>
   </wsdl:message>
-  <wsdl:message name="VerifyCountSoapIn">
-    <wsdl:part name="parameters" element="tns:VerifyCount" />
+  <wsdl:message name="IPortalData_SendEvent_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendEvent"/>
   </wsdl:message>
-  <wsdl:message name="VerifyCountSoapOut">
-    <wsdl:part name="parameters" element="tns:VerifyCountResponse" />
+  <wsdl:message name="IPortalData_SendEvent_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendEventResponse"/>
   </wsdl:message>
-  <wsdl:message name="GetShipmentStatusSoapIn">
-    <wsdl:part name="parameters" element="tns:GetShipmentStatus" />
+  <wsdl:message name="IPortalData_IsShipmentClosed_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsShipmentClosed"/>
   </wsdl:message>
-  <wsdl:message name="GetShipmentStatusSoapOut">
-    <wsdl:part name="parameters" element="tns:GetShipmentStatusResponse" />
+  <wsdl:message name="IPortalData_IsShipmentClosed_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsShipmentClosedResponse"/>
   </wsdl:message>
-  <wsdl:portType name="ShipmentExporterEntryPointSoap">
-    <wsdl:operation name="GetShipmentByShipmentNumber">
-      <wsdl:input message="tns:GetShipmentByShipmentNumberSoapIn" />
-      <wsdl:output message="tns:GetShipmentByShipmentNumberSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="GetShipmentByOrderNumber">
-      <wsdl:input message="tns:GetShipmentByOrderNumberSoapIn" />
-      <wsdl:output message="tns:GetShipmentByOrderNumberSoapOut" />
+  <wsdl:message name="IPortalData_CheckHealth_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckHealth"/>
+  </wsdl:message>
+  <wsdl:message name="IPortalData_CheckHealth_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckHealthResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="IPortalData">
+    <wsdl:operation name="GetShipmentsByShipmentNumber">
+      <wsdl:input wsaw:Action="http://edisoftwebservices.com/IPortalData/GetShipmentsByShipmentNumber" message="tns:IPortalData_GetShipmentsByShipmentNumber_InputMessage"/>
+      <wsdl:output wsaw:Action="http://edisoftwebservices.com/IPortalData/GetShipmentsByShipmentNumberResponse" message="tns:IPortalData_GetShipmentsByShipmentNumber_OutputMessage"/>
     </wsdl:operation>
     <wsdl:operation name="GetShipmentsByOrderNumber">
-      <wsdl:input message="tns:GetShipmentsByOrderNumberSoapIn" />
-      <wsdl:output message="tns:GetShipmentsByOrderNumberSoapOut" />
+      <wsdl:input wsaw:Action="http://edisoftwebservices.com/IPortalData/GetShipmentsByOrderNumber" message="tns:IPortalData_GetShipmentsByOrderNumber_InputMessage"/>
+      <wsdl:output wsaw:Action="http://edisoftwebservices.com/IPortalData/GetShipmentsByOrderNumberResponse" message="tns:IPortalData_GetShipmentsByOrderNumber_OutputMessage"/>
     </wsdl:operation>
-    <wsdl:operation name="GetShipmentByPackageNumber">
-      <wsdl:input message="tns:GetShipmentByPackageNumberSoapIn" />
-      <wsdl:output message="tns:GetShipmentByPackageNumberSoapOut" />
+    <wsdl:operation name="GetShipmentsByPackageNumber">
+      <wsdl:input wsaw:Action="http://edisoftwebservices.com/IPortalData/GetShipmentsByPackageNumber" message="tns:IPortalData_GetShipmentsByPackageNumber_InputMessage"/>
+      <wsdl:output wsaw:Action="http://edisoftwebservices.com/IPortalData/GetShipmentsByPackageNumberResponse" message="tns:IPortalData_GetShipmentsByPackageNumber_OutputMessage"/>
     </wsdl:operation>
-    <wsdl:operation name="GetShipmentByDateRange">
-      <wsdl:input message="tns:GetShipmentByDateRangeSoapIn" />
-      <wsdl:output message="tns:GetShipmentByDateRangeSoapOut" />
+    <wsdl:operation name="GetShipmentsByDateRange">
+      <wsdl:input wsaw:Action="http://edisoftwebservices.com/IPortalData/GetShipmentsByDateRange" message="tns:IPortalData_GetShipmentsByDateRange_InputMessage"/>
+      <wsdl:output wsaw:Action="http://edisoftwebservices.com/IPortalData/GetShipmentsByDateRangeResponse" message="tns:IPortalData_GetShipmentsByDateRange_OutputMessage"/>
     </wsdl:operation>
     <wsdl:operation name="GetEvents">
-      <wsdl:input message="tns:GetEventsSoapIn" />
-      <wsdl:output message="tns:GetEventsSoapOut" />
+      <wsdl:input wsaw:Action="http://edisoftwebservices.com/IPortalData/GetEvents" message="tns:IPortalData_GetEvents_InputMessage"/>
+      <wsdl:output wsaw:Action="http://edisoftwebservices.com/IPortalData/GetEventsResponse" message="tns:IPortalData_GetEvents_OutputMessage"/>
     </wsdl:operation>
-    <wsdl:operation name="GetEventsByEventCode">
-      <wsdl:input message="tns:GetEventsByEventCodeSoapIn" />
-      <wsdl:output message="tns:GetEventsByEventCodeSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="VerifyCount">
-      <wsdl:input message="tns:VerifyCountSoapIn" />
-      <wsdl:output message="tns:VerifyCountSoapOut" />
+    <wsdl:operation name="GetCarrierEventsByEventCode">
+      <wsdl:input wsaw:Action="http://edisoftwebservices.com/IPortalData/GetCarrierEventsByEventCode" message="tns:IPortalData_GetCarrierEventsByEventCode_InputMessage"/>
+      <wsdl:output wsaw:Action="http://edisoftwebservices.com/IPortalData/GetCarrierEventsByEventCodeResponse" message="tns:IPortalData_GetCarrierEventsByEventCode_OutputMessage"/>
     </wsdl:operation>
     <wsdl:operation name="GetShipmentStatus">
-      <wsdl:input message="tns:GetShipmentStatusSoapIn" />
-      <wsdl:output message="tns:GetShipmentStatusSoapOut" />
+      <wsdl:input wsaw:Action="http://edisoftwebservices.com/IPortalData/GetShipmentStatus" message="tns:IPortalData_GetShipmentStatus_InputMessage"/>
+      <wsdl:output wsaw:Action="http://edisoftwebservices.com/IPortalData/GetShipmentStatusResponse" message="tns:IPortalData_GetShipmentStatus_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="SendEvent">
+      <wsdl:input wsaw:Action="http://edisoftwebservices.com/IPortalData/SendEvent" message="tns:IPortalData_SendEvent_InputMessage"/>
+      <wsdl:output wsaw:Action="http://edisoftwebservices.com/IPortalData/SendEventResponse" message="tns:IPortalData_SendEvent_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="IsShipmentClosed">
+      <wsdl:input wsaw:Action="http://edisoftwebservices.com/IPortalData/IsShipmentClosed" message="tns:IPortalData_IsShipmentClosed_InputMessage"/>
+      <wsdl:output wsaw:Action="http://edisoftwebservices.com/IPortalData/IsShipmentClosedResponse" message="tns:IPortalData_IsShipmentClosed_OutputMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="CheckHealth">
+      <wsdl:input wsaw:Action="http://edisoftwebservices.com/IPortalData/CheckHealth" message="tns:IPortalData_CheckHealth_InputMessage"/>
+      <wsdl:output wsaw:Action="http://edisoftwebservices.com/IPortalData/CheckHealthResponse" message="tns:IPortalData_CheckHealth_OutputMessage"/>
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="ShipmentExporterEntryPointSoap" type="tns:ShipmentExporterEntryPointSoap">
-    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetShipmentByShipmentNumber">
-      <soap:operation soapAction="http://edisoftwebservices.com/GetShipmentByShipmentNumber" style="document" />
+  <wsdl:binding name="BasicHttpBinding_IPortalData" type="tns:IPortalData">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetShipmentsByShipmentNumber">
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/GetShipmentsByShipmentNumber" style="document"/>
       <wsdl:input>
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetShipmentByOrderNumber">
-      <soap:operation soapAction="http://edisoftwebservices.com/GetShipmentByOrderNumber" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetShipmentsByOrderNumber">
-      <soap:operation soapAction="http://edisoftwebservices.com/GetShipmentsByOrderNumber" style="document" />
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/GetShipmentsByOrderNumber" style="document"/>
       <wsdl:input>
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetShipmentByPackageNumber">
-      <soap:operation soapAction="http://edisoftwebservices.com/GetShipmentByPackageNumber" style="document" />
+    <wsdl:operation name="GetShipmentsByPackageNumber">
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/GetShipmentsByPackageNumber" style="document"/>
       <wsdl:input>
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetShipmentByDateRange">
-      <soap:operation soapAction="http://edisoftwebservices.com/GetShipmentByDateRange" style="document" />
+    <wsdl:operation name="GetShipmentsByDateRange">
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/GetShipmentsByDateRange" style="document"/>
       <wsdl:input>
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetEvents">
-      <soap:operation soapAction="http://edisoftwebservices.com/GetEvents" style="document" />
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/GetEvents" style="document"/>
       <wsdl:input>
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetEventsByEventCode">
-      <soap:operation soapAction="http://edisoftwebservices.com/GetEventsByEventCode" style="document" />
+    <wsdl:operation name="GetCarrierEventsByEventCode">
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/GetCarrierEventsByEventCode" style="document"/>
       <wsdl:input>
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="VerifyCount">
-      <soap:operation soapAction="http://edisoftwebservices.com/VerifyCount" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetShipmentStatus">
-      <soap:operation soapAction="http://edisoftwebservices.com/GetShipmentStatus" style="document" />
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/GetShipmentStatus" style="document"/>
       <wsdl:input>
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output>
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendEvent">
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/SendEvent" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsShipmentClosed">
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/IsShipmentClosed" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckHealth">
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/CheckHealth" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:binding name="ShipmentExporterEntryPointSoap12" type="tns:ShipmentExporterEntryPointSoap">
-    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetShipmentByShipmentNumber">
-      <soap12:operation soapAction="http://edisoftwebservices.com/GetShipmentByShipmentNumber" style="document" />
+  <wsdl:binding name="BasicHttpsBinding_IPortalData" type="tns:IPortalData">
+    <wsp:PolicyReference URI="#BasicHttpsBinding_IPortalData_policy"/>
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetShipmentsByShipmentNumber">
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/GetShipmentsByShipmentNumber" style="document"/>
       <wsdl:input>
-        <soap12:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetShipmentByOrderNumber">
-      <soap12:operation soapAction="http://edisoftwebservices.com/GetShipmentByOrderNumber" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetShipmentsByOrderNumber">
-      <soap12:operation soapAction="http://edisoftwebservices.com/GetShipmentsByOrderNumber" style="document" />
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/GetShipmentsByOrderNumber" style="document"/>
       <wsdl:input>
-        <soap12:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetShipmentByPackageNumber">
-      <soap12:operation soapAction="http://edisoftwebservices.com/GetShipmentByPackageNumber" style="document" />
+    <wsdl:operation name="GetShipmentsByPackageNumber">
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/GetShipmentsByPackageNumber" style="document"/>
       <wsdl:input>
-        <soap12:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetShipmentByDateRange">
-      <soap12:operation soapAction="http://edisoftwebservices.com/GetShipmentByDateRange" style="document" />
+    <wsdl:operation name="GetShipmentsByDateRange">
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/GetShipmentsByDateRange" style="document"/>
       <wsdl:input>
-        <soap12:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetEvents">
-      <soap12:operation soapAction="http://edisoftwebservices.com/GetEvents" style="document" />
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/GetEvents" style="document"/>
       <wsdl:input>
-        <soap12:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetEventsByEventCode">
-      <soap12:operation soapAction="http://edisoftwebservices.com/GetEventsByEventCode" style="document" />
+    <wsdl:operation name="GetCarrierEventsByEventCode">
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/GetCarrierEventsByEventCode" style="document"/>
       <wsdl:input>
-        <soap12:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="VerifyCount">
-      <soap12:operation soapAction="http://edisoftwebservices.com/VerifyCount" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetShipmentStatus">
-      <soap12:operation soapAction="http://edisoftwebservices.com/GetShipmentStatus" style="document" />
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/GetShipmentStatus" style="document"/>
       <wsdl:input>
-        <soap12:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output>
-        <soap12:body use="literal" />
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendEvent">
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/SendEvent" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="IsShipmentClosed">
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/IsShipmentClosed" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckHealth">
+      <soap:operation soapAction="http://edisoftwebservices.com/IPortalData/CheckHealth" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name="ShipmentExporterEntryPoint">
-    <wsdl:port name="ShipmentExporterEntryPointSoap" binding="tns:ShipmentExporterEntryPointSoap">
-      <soap:address location="http://se.consignorportal.com:6060/ShipmentExporter.asmx" />
+  <wsdl:service name="PortalDataService">
+    <wsdl:port name="BasicHttpBinding_IPortalData" binding="tns:BasicHttpBinding_IPortalData">
+      <soap:address location="http://ws.consignorportal.com/PortalData/PortalData.svc"/>
     </wsdl:port>
-    <wsdl:port name="ShipmentExporterEntryPointSoap12" binding="tns:ShipmentExporterEntryPointSoap12">
-      <soap12:address location="http://se.consignorportal.com:6060/ShipmentExporter.asmx" />
+    <wsdl:port name="BasicHttpsBinding_IPortalData" binding="tns:BasicHttpsBinding_IPortalData">
+      <soap:address location="https://ws.consignorportal.com:8000/PortalData/PortalData.svc"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

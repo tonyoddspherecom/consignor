@@ -5,206 +5,229 @@ using System.ServiceModel;
 
 namespace Consignor.Internal
 {
-    internal class ShipmentExporterAsync : ClientBase<IShipmentExporterAsync>, IShipmentExporterAsync
+    internal partial class ShipmentExporterAsync : ClientBase<IShipmentExporterAsync>, IShipmentExporterAsync
     {
-        public ShipmentExporterAsync(Binding binding, EndpointAddress address) : base(binding, address) { }
+        public ShipmentExporterAsync(Binding binding, EndpointAddress remoteAddress) : base(binding, remoteAddress) { }
+
 
         protected override IShipmentExporterAsync CreateChannel()
         {
             return new ShipmentExporterChannel(this);
         }
 
-        public IAsyncResult BeginGetEvents(string userName, string password, DateTime eventDateTimeStart, DateTime eventDateTimeEnd, AsyncCallback callback, object state)
+
+        public IAsyncResult BeginGetShipmentStatus(string userName, string password, string shipmentNumber, DateTime? startDateTime, DateTime? endDateTime, AsyncCallback callback, object asyncState)
         {
-            return Channel.BeginGetEvents(userName, password, eventDateTimeStart, eventDateTimeEnd, callback, state);
+            return Channel.BeginGetShipmentStatus(userName, password, shipmentNumber, startDateTime, endDateTime, callback, asyncState);
         }
 
-        public EventResponse EndGetEvents(IAsyncResult result)
-        {
-            return Channel.EndGetEvents(result);
-        }
-
-        public IAsyncResult BeginGetEventsByEventCode(string userName, string password, DateTime eventDateTimeStart, DateTime eventDateTimeEnd, string[] eventCode, int[] actorId, AsyncCallback callback, object state)
-        {
-            return Channel.BeginGetEventsByEventCode(userName, password, eventDateTimeStart, eventDateTimeEnd, eventCode, actorId, callback, state);
-        }
-
-        public EventResponseByEvent EndGetEventsByEventCode(IAsyncResult result)
-        {
-            return Channel.EndGetEventsByEventCode(result);
-        }
-
-        public IAsyncResult BeginGetShipmentByDateRange(string userName, string password, string installationValue, int[] actors, DateTime startDate, DateTime endDate, int pageIndex, AsyncCallback callback, object state)
-        {
-            return Channel.BeginGetShipmentByDateRange(userName, password, installationValue, actors, startDate, endDate, pageIndex, callback, state);
-        }
-
-        public Response EndGetShipmentByDateRange(IAsyncResult result)
-        {
-            return Channel.EndGetShipmentByDateRange(result);
-        }
-
-        public IAsyncResult BeginGetShipmentByOrderNumber(string userName, string password, string installationValue, int[] actors, string referenceNumber, AsyncCallback callback, object state)
-        {
-            return Channel.BeginGetShipmentByOrderNumber(userName, password, installationValue, actors, referenceNumber, callback, state);
-        }
-
-        public Response EndGetShipmentByOrderNumber(IAsyncResult result)
-        {
-            return Channel.EndGetShipmentByOrderNumber(result);
-        }
-
-        public IAsyncResult BeginGetShipmentByPackageNumber(string userName, string password, string installationValue, int[] actors, string packageNumber, AsyncCallback callback, object state)
-        {
-            return Channel.BeginGetShipmentByPackageNumber(userName, password, installationValue, actors, packageNumber, callback, state);
-        }
-
-        public Response EndGetShipmentByPackageNumber(IAsyncResult result)
-        {
-            return Channel.EndGetShipmentByPackageNumber(result);
-        }
-
-        public IAsyncResult BeginGetShipmentByShipmentNumber(string userName, string password, string installationValue, int[] actors, string shipmentNumber, AsyncCallback callback, object state)
-        {
-            return Channel.BeginGetShipmentByShipmentNumber(userName, password, installationValue, actors, shipmentNumber, callback, state);
-        }
-
-        public Response EndGetShipmentByShipmentNumber(IAsyncResult result)
-        {
-            return Channel.EndGetShipmentByShipmentNumber(result);
-        }
-
-        public IAsyncResult BeginGetShipmentsByOrderNumber(string userName, string password, string installationValue, int[] actors, string referenceNumber, AsyncCallback callback, object state)
-        {
-            return Channel.BeginGetShipmentsByOrderNumber(userName, password, installationValue, actors, referenceNumber, callback, state);
-        }
-
-        public Response EndGetShipmentsByOrderNumber(IAsyncResult result)
-        {
-            return Channel.EndGetShipmentsByOrderNumber(result);
-        }
-
-        public IAsyncResult BeginGetShipmentStatus(string userName, string password, string number, AsyncCallback callback, object state)
-        {
-            return Channel.BeginGetShipmentStatus(userName, password, number, callback, state);
-        }
-
-        public EventResponse EndGetShipmentStatus(IAsyncResult result)
+        public Event[] EndGetShipmentStatus(IAsyncResult result)
         {
             return Channel.EndGetShipmentStatus(result);
         }
 
-        public IAsyncResult BeginVerifyCount(string userName, string password, DateTime eventDateTimeStart, DateTime eventDateTimeEnd, string[] eventCode, int[] actorId, AsyncCallback callback, object state)
+        public IAsyncResult BeginGetShipmentsByShipmentNumber(string userName, string password, string installationValue, int[] actors, string shipmentNumber, DateTime? startDateTime, DateTime? endDateTime, AsyncCallback callback, object asyncState)
         {
-            return Channel.BeginVerifyCount(userName, password, eventDateTimeStart, eventDateTimeEnd, eventCode, actorId, callback, state);
+            return Channel.BeginGetShipmentsByShipmentNumber(userName, password, installationValue, actors, shipmentNumber, startDateTime, endDateTime, callback, asyncState);
         }
 
-        public EventCountResponse EndVerifyCount(IAsyncResult result)
+        public Shipment[] EndGetShipmentsByShipmentNumber(IAsyncResult result)
         {
-            return Channel.EndVerifyCount(result);
+            return Channel.EndGetShipmentsByShipmentNumber(result);
+        }
+
+        public IAsyncResult BeginGetShipmentsByOrderNumber(string userName, string password, string installationValue, int[] actors, string referenceNumber, DateTime? startDateTime, DateTime? endDateTime, AsyncCallback callback, object asyncState)
+        {
+            return Channel.BeginGetShipmentsByOrderNumber(userName, password, installationValue, actors, referenceNumber, startDateTime, endDateTime, callback, asyncState);
+        }
+
+        public Shipment[] EndGetShipmentsByOrderNumber(IAsyncResult result)
+        {
+            return Channel.EndGetShipmentsByOrderNumber(result);
+        }
+
+        public IAsyncResult BeginGetShipmentsByPackageNumber(string userName, string password, string installationValue, int[] actors, string packageNumber, DateTime? startDateTime, DateTime? endDateTime, AsyncCallback callback, object asyncState)
+        {
+            return Channel.BeginGetShipmentsByPackageNumber(userName, password, installationValue, actors, packageNumber, startDateTime, endDateTime, callback, asyncState);
+        }
+
+        public Shipment[] EndGetShipmentsByPackageNumber(IAsyncResult result)
+        {
+            return Channel.EndGetShipmentsByPackageNumber(result);
+        }
+
+        public IAsyncResult BeginGetShipmentsByDateRange(string userName, string password, string installationValue, int[] actors, DateTime startDateTime, DateTime endDateTime, int pageIndex, AsyncCallback callback, object asyncState)
+        {
+            return Channel.BeginGetShipmentsByDateRange(userName, password, installationValue, actors, startDateTime, endDateTime, pageIndex, callback, asyncState);
+        }
+
+        public Shipment[] EndGetShipmentsByDateRange(IAsyncResult result)
+        {
+            return Channel.EndGetShipmentsByDateRange(result);
+        }
+
+        public IAsyncResult BeginGetEvents(string userName, string password, DateTime eventDateTimeStart, DateTime eventDateTimeEnd, AsyncCallback callback, object asyncState)
+        {
+            return Channel.BeginGetEvents(userName, password, eventDateTimeStart, eventDateTimeEnd, callback, asyncState);
+        }
+
+        public Event[] EndGetEvents(IAsyncResult result)
+        {
+            return Channel.EndGetEvents(result);
+        }
+
+        public IAsyncResult BeginGetCarrierEventsByEventCode(string userName, string password, DateTime eventDateTimeStart, DateTime eventDateTimeEnd, string[] eventCodes, string installationValue, int[] actors, AsyncCallback callback, object asyncState)
+        {
+            return Channel.BeginGetCarrierEventsByEventCode(userName, password, eventDateTimeStart, eventDateTimeEnd, eventCodes, installationValue, actors, callback, asyncState);
+        }
+
+        public Event[] EndGetCarrierEventsByEventCode(IAsyncResult result)
+        {
+            return Channel.EndGetCarrierEventsByEventCode(result);
+        }
+
+        public IAsyncResult BeginSendEvent(string userName, string password, ImportEvent submitEvent, AsyncCallback callback, object asyncState)
+        {
+            return Channel.BeginSendEvent(userName, password, submitEvent, callback, asyncState);
+        }
+
+        public bool EndSendEvent(IAsyncResult result)
+        {
+            return Channel.EndSendEvent(result);
+        }
+
+        public IAsyncResult BeginIsShipmentClosed(string userName, string password, string barcode, AsyncCallback callback, object asyncState)
+        {
+            return Channel.BeginIsShipmentClosed(userName, password, barcode, callback, asyncState);
+        }
+
+        public StatusInfo[] EndIsShipmentClosed(IAsyncResult result)
+        {
+            return Channel.EndIsShipmentClosed(result);
+        }
+
+        public IAsyncResult BeginCheckHealth(AsyncCallback callback, object asyncState)
+        {
+            return Channel.BeginCheckHealth(callback, asyncState);
+        }
+
+        public HealthResponse EndCheckHealth(IAsyncResult result)
+        {
+            return Channel.EndCheckHealth(result);
         }
 
         protected class ShipmentExporterChannel : ChannelBase<IShipmentExporterAsync>, IShipmentExporterAsync
         {
             public ShipmentExporterChannel(ClientBase<IShipmentExporterAsync> client) : base(client) { }
 
-            public IAsyncResult BeginGetEvents(string userName, string password, DateTime eventDateTimeStart, DateTime eventDateTimeEnd, AsyncCallback callback, object state)
+            public IAsyncResult BeginCheckHealth(AsyncCallback callback, object asyncState)
             {
-                var _args = new object[] { userName, password, eventDateTimeStart, eventDateTimeEnd };
-                return base.BeginInvoke("GetEvents", _args, callback, state);
+                var _args = new object[] { };
+                return base.BeginInvoke("CheckHealth", _args, callback, asyncState);
             }
 
-            public EventResponse EndGetEvents(IAsyncResult result)
+            public IAsyncResult BeginGetCarrierEventsByEventCode(string userName, string password, DateTime eventDateTimeStart, DateTime eventDateTimeEnd, string[] eventCodes, string installationValue, int[] actors, AsyncCallback callback, object asyncState)
             {
-                return ((EventResponse)(base.EndInvoke("GetEvents", new object[0], result)));
+                var _args = new object[] { userName, password, eventDateTimeStart, eventDateTimeEnd, eventCodes, installationValue, actors };
+                return base.BeginInvoke("GetCarrierEventsByEventCode", _args, callback, asyncState);
             }
 
-            public IAsyncResult BeginGetEventsByEventCode(string userName, string password, DateTime eventDateTimeStart, DateTime eventDateTimeEnd, string[] eventCode, int[] actorId, AsyncCallback callback, object state)
+            public IAsyncResult BeginGetEvents(string userName, string password, DateTime eventDateTimeStart, DateTime eventDateTimeEnd, AsyncCallback callback, object asyncState)
             {
-                var _args = new object[] { userName, password, eventDateTimeStart, eventDateTimeEnd, eventCode, actorId};
-                return base.BeginInvoke("GetEventsByEventCode", _args, callback, state);
+                var _args = new object[] { userName, password, eventDateTimeStart, eventDateTimeEnd};
+                return base.BeginInvoke("GetEvents", _args, callback, asyncState);
             }
 
-            public EventResponseByEvent EndGetEventsByEventCode(IAsyncResult result)
+            public IAsyncResult BeginGetShipmentsByDateRange(string userName, string password, string installationValue, int[] actors, DateTime startDateTime, DateTime endDateTime, int pageIndex, AsyncCallback callback, object asyncState)
             {
-                return ((EventResponseByEvent)(base.EndInvoke("GetEventsByEventCode", new object[0], result)));
+                var _args = new object[] { userName, password, installationValue, actors, startDateTime, endDateTime, pageIndex };
+                return base.BeginInvoke("GetShipmentsByDateRange", _args, callback, asyncState);
             }
 
-            public IAsyncResult BeginGetShipmentByDateRange(string userName, string password, string installationValue, int[] actors, DateTime startDate, DateTime endDate, int pageIndex, AsyncCallback callback, object state)
+            public IAsyncResult BeginGetShipmentsByOrderNumber(string userName, string password, string installationValue, int[] actors, string referenceNumber, DateTime? startDateTime, DateTime? endDateTime, AsyncCallback callback, object asyncState)
             {
-                var _args = new object[] { userName, password, installationValue, actors, startDate, endDate, pageIndex };
-                return base.BeginInvoke("GetShipmentByDateRange", _args, callback, state);
+                var _args = new object[] { userName, password, installationValue, actors, referenceNumber, startDateTime, endDateTime };
+                return base.BeginInvoke("GetShipmentsByOrderNumber", _args, callback, asyncState);
             }
 
-            public Response EndGetShipmentByDateRange(IAsyncResult result)
+            public IAsyncResult BeginGetShipmentsByPackageNumber(string userName, string password, string installationValue, int[] actors, string packageNumber, DateTime? startDateTime, DateTime? endDateTime, AsyncCallback callback, object asyncState)
             {
-                return ((Response)(base.EndInvoke("GetShipmentByDateRange", new object[0], result)));
+                var _args = new object[] { userName, password, installationValue, actors, packageNumber, startDateTime, endDateTime };
+                return base.BeginInvoke("GetShipmentsByPackageNumber", _args, callback, asyncState);
             }
 
-            public IAsyncResult BeginGetShipmentByOrderNumber(string userName, string password, string installationValue, int[] actors, string referenceNumber, AsyncCallback callback, object state)
+            public IAsyncResult BeginGetShipmentsByShipmentNumber(string userName, string password, string installationValue, int[] actors, string shipmentNumber, DateTime? startDateTime, DateTime? endDateTime, AsyncCallback callback, object asyncState)
             {
-                var _args = new object[] { userName, password, installationValue, actors, referenceNumber };
-                return base.BeginInvoke("GetShipmentByOrderNumber", _args, callback, state);
+                var _args = new object[] { userName, password, installationValue, actors, shipmentNumber, startDateTime, endDateTime };
+                return base.BeginInvoke("GetShipmentsByShipmentNumber", _args, callback, asyncState);
             }
 
-            public Response EndGetShipmentByOrderNumber(IAsyncResult result)
+            public IAsyncResult BeginGetShipmentStatus(string userName, string password, string shipmentNumber, DateTime? startDateTime, DateTime? endDateTime, AsyncCallback callback, object asyncState)
             {
-                return ((Response)(base.EndInvoke("GetShipmentByOrderNumber", new object[0], result)));
+                var _args = new object[] { userName, password, shipmentNumber, startDateTime, endDateTime };
+                return base.BeginInvoke("GetShipmentStatus", _args, callback, asyncState);
             }
 
-            public IAsyncResult BeginGetShipmentByPackageNumber(string userName, string password, string installationValue, int[] actors, string packageNumber, AsyncCallback callback, object state)
+            public IAsyncResult BeginIsShipmentClosed(string userName, string password, string barcode, AsyncCallback callback, object asyncState)
             {
-                var _args = new object[] { userName, password, installationValue, actors, packageNumber, };
-                return base.BeginInvoke("GetShipmentByPackageNumber", _args, callback, state);
+                var _args = new object[] { userName, password, barcode };
+                return base.BeginInvoke("IsShipmentClosed", _args, callback, asyncState);
             }
 
-            public Response EndGetShipmentByPackageNumber(IAsyncResult result)
+            public IAsyncResult BeginSendEvent(string userName, string password, ImportEvent submitEvent, AsyncCallback callback, object asyncState)
             {
-                return ((Response)(base.EndInvoke("GetShipmentByPackageNumber", new object[0], result)));
+                var _args = new object[] { userName, password, submitEvent };
+                return base.BeginInvoke("SendEvent", _args, callback, asyncState);
             }
 
-            public IAsyncResult BeginGetShipmentByShipmentNumber(string userName, string password, string installationValue, int[] actors, string shipmentNumber, AsyncCallback callback, object state)
+            public HealthResponse EndCheckHealth(IAsyncResult result)
             {
-                var _args = new object[] { userName, password, installationValue, actors, shipmentNumber};
-                return base.BeginInvoke("GetShipmentByShipmentNumber", _args, callback, state);
+                return (HealthResponse)(base.EndInvoke("CheckHealth", new object[0], result));
             }
 
-            public Response EndGetShipmentByShipmentNumber(IAsyncResult result)
+            public Event[] EndGetCarrierEventsByEventCode(IAsyncResult result)
             {
-                return ((Response)(base.EndInvoke("GetShipmentByShipmentNumber", new object[0], result)));
+                return (Event[])(base.EndInvoke("GetCarrierEventsByEventCode", new object[0], result));
             }
 
-            public IAsyncResult BeginGetShipmentsByOrderNumber(string userName, string password, string installationValue, int[] actors, string referenceNumber, AsyncCallback callback, object state)
+            public Event[] EndGetEvents(IAsyncResult result)
             {
-                var _args = new object[] { userName, password, installationValue, actors, referenceNumber };
-                return base.BeginInvoke("GetShipmentsByOrderNumber", _args, callback, state);
+                return (Event[])(base.EndInvoke("GetEvents", new object[0], result));
             }
 
-            public Response EndGetShipmentsByOrderNumber(IAsyncResult result)
+            public Shipment[] EndGetShipmentsByDateRange(IAsyncResult result)
             {
-                return ((Response)(base.EndInvoke("GetShipmentsByOrderNumber", new object[0], result)));
+                return (Shipment[])(base.EndInvoke("GetShipmentsByDateRange", new object[0], result));
             }
 
-            public IAsyncResult BeginGetShipmentStatus(string userName, string password, string number, AsyncCallback callback, object state)
+            public Shipment[] EndGetShipmentsByOrderNumber(IAsyncResult result)
             {
-                var _args = new object[] { userName, password, number };
-                return base.BeginInvoke("GetShipmentStatus", _args, callback, state);
+                return (Shipment[])(base.EndInvoke("GetShipmentsByOrderNumber", new object[0], result));
             }
 
-            public EventResponse EndGetShipmentStatus(IAsyncResult result)
+            public Shipment[] EndGetShipmentsByPackageNumber(IAsyncResult result)
             {
-                return ((EventResponse)(base.EndInvoke("GetShipmentStatus", new object[0], result)));
+                return (Shipment[])(base.EndInvoke("GetShipmentsByPackageNumber", new object[0], result));
             }
 
-            public IAsyncResult BeginVerifyCount(string userName, string password, DateTime eventDateTimeStart, DateTime eventDateTimeEnd, string[] eventCode, int[] actorId, AsyncCallback callback, object state)
+            public Shipment[] EndGetShipmentsByShipmentNumber(IAsyncResult result)
             {
-                var _args = new object[] { userName, password, eventDateTimeStart, eventDateTimeEnd, eventCode, actorId};
-                return base.BeginInvoke("VerifyCount", _args, callback, state);
+                return (Shipment[])(base.EndInvoke("GetShipmentsByShipmentNumber", new object[0], result));
             }
 
-            public EventCountResponse EndVerifyCount(IAsyncResult result)
+            public Event[] EndGetShipmentStatus(IAsyncResult result)
             {
-                return ((EventCountResponse)(base.EndInvoke("VerifyCount", new object[0], result)));
+                return (Event[])(base.EndInvoke("GetShipmentStatus", new object[0], result));
+            }
+
+            public StatusInfo[] EndIsShipmentClosed(IAsyncResult result)
+            {
+                return (StatusInfo[])(base.EndInvoke("IsShipmentClosed", new object[0], result));
+            }
+
+            public bool EndSendEvent(IAsyncResult result)
+            {
+                return (bool)(base.EndInvoke("SendEvent", new object[0], result));
             }
         }
     }

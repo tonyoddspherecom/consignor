@@ -9,5 +9,14 @@ namespace Consignor.ShipmentServer
 
         [DefaultValue(0)]
         public int Type { get; set; }
+
+        [DefaultValue(1)]
+        public int Copies { get; set; }
+
+        [DefaultValue(1)]
+        public string PkgCSID { get; set; }
+
+        [DefaultValue("")]
+        public string PkgNo { get; set; }
     }
 }
